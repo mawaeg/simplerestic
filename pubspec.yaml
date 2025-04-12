@@ -9,10 +9,16 @@ environment:
   flutter: '>=3.29.2'
 
 dependencies:
+  bloc: ^9.0.0
+  equatable: ^2.0.7
+  file_picker: ^9.2.3
   flutter:
     sdk: flutter
 
+  flutter_bloc: ^9.1.0
   handy_window: ^0.4.0
+  hydrated_bloc: ^10.0.0
+  path_provider: ^2.1.5
   yaru: ^7.0.0
 
 dev_dependencies:
