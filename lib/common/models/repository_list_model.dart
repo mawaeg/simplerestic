@@ -1,7 +1,9 @@
+import 'package:equatable/equatable.dart';
+
 import 'repository_model.dart';
 
-class RepositoryListModel {
-  List<RepositoryModel> _repositories;
+class RepositoryListModel extends Equatable {
+  final List<RepositoryModel> _repositories;
 
   RepositoryListModel({List<RepositoryModel>? repositories})
       : _repositories = repositories ?? [];
@@ -44,4 +46,7 @@ class RepositoryListModel {
       "repositories": jsonRepositories,
     };
   }
+
+  @override
+  List<Object?> get props => [_repositories];
 }
