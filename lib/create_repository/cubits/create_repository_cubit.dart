@@ -19,4 +19,14 @@ class CreateRepositoryCubit extends Cubit<CreateRepositoryModel> {
     state.alias = alias;
     emit(state);
   }
+
+  void setIsSuccessful(bool isSuccessful) {
+    state.isSuccessful = isSuccessful;
+    emit(state);
+  }
+
+  void clear() {
+    state.clear();
+    emit(state);
+  }
 }
