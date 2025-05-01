@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simplerestic/home/widgets/repository_list_yaru_master_tile.dart';
 import 'package:yaru/yaru.dart';
 
 import '../../common/cubits/repository_list_cubit.dart';
@@ -12,24 +13,20 @@ class RepositoryListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<RepositoryListCubit, RepositoryListModel>(
       builder: (context, state) {
-        return ListView.builder(
-          padding: EdgeInsets.all(kYaruPagePadding),
-          itemCount: state.getRepositories().length,
-          itemBuilder: (context, index) {
-            return Container(
-              width: double.infinity,
-              alignment: Alignment.topCenter,
-              child: SizedBox(
-                width: 700,
-                child: YaruTile(
-                  title: Text(
-                    state.getRepositories()[index].alias ??
-                        state.getRepositories()[index].path,
-                  ),
-                  subtitle: state.getRepositories()[index].alias != null
-                      ? Text(state.getRepositories()[index].path)
-                      : null,
-                ),
+        return YaruMasterDetailPage(
+          paneLayoutDelegate: YaruFixedPaneDelegate(paneSize: 400),
+          length: state.getRepositories().length,
+          tileBuilder: (context, index, selected, availableWidth) {
+            return RepositoryListYaruMasterTile(
+              path: state.getRepositories()[index].path,
+              alias: state.getRepositories()[index].alias,
+            );
+          },
+          pageBuilder: (context, index) {
+            return Center(
+              child: Text(
+                state.getRepositories()[index].alias ??
+                    state.getRepositories()[index].path,
               ),
             );
           },
