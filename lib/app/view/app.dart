@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:simplerestic/create_repository/cubits/create_repository_cubit.dart';
 import 'package:yaru/yaru.dart';
 
 import '../../common/cubits/repository_list_cubit.dart';
-import '../../home/view/home_page.dart';
+import '../../create_repository/cubits/create_repository_cubit.dart';
+import '../../home/view/home_view.dart';
 
 class SimpleResticApp extends StatelessWidget {
   const SimpleResticApp({super.key});
@@ -22,7 +22,7 @@ class SimpleResticApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: yaru.theme,
             darkTheme: yaru.darkTheme,
-            home: HomePage(),
+            home: HomeView(),
           ),
         );
       },
