@@ -25,7 +25,7 @@ class HomeView extends StatelessWidget {
               leading: Center(child: CreateRepositoryWidget()),
               actions: [OptionsWidget()],
             ),
-            paneLayoutDelegate: YaruFixedPaneDelegate(paneSize: 400),
+            paneLayoutDelegate: YaruFixedPaneDelegate(paneSize: 450),
             length: state.length,
             tileBuilder: (context, index, selected, availableWidth) {
               return RepositoryListYaruMasterTile(repository: state[index]);
@@ -45,10 +45,15 @@ class HomeView extends StatelessWidget {
                 ),
                 body: Center(
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (_) => CreateRepositoryAlertDialog()),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                    ),
+                    onPressed: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return CreateRepositoryAlertDialog();
+                        },
                       );
                     },
                     child: Text("Create a repository."),

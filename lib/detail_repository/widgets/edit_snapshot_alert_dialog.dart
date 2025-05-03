@@ -43,6 +43,9 @@ class EditSnapshotAlertDialog extends StatelessWidget {
               height: 10,
             ),
             ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                ),
                 onPressed: () {
                   if (snapshot != null && _controller.text.isEmpty) {
                     context
