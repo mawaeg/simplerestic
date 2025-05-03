@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:simplerestic/backend/restic_command/base/restic_command_type.dart';
-
 import 'restic_command/base/restic_command.dart';
+import 'restic_command/base/restic_command_type.dart';
 import 'restic_types/restic_error_type.dart';
 import 'restic_types/restic_return_type.dart';
 import 'restic_types/base/restic_scripting_base_type.dart';

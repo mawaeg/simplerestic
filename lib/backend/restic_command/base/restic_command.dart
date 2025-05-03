@@ -1,6 +1,5 @@
-import 'package:simplerestic/backend/utils/normalize_enum_name.dart';
-
 import '../../restic_types/base/restic_json_type.dart';
+import '../../utils/normalize_enum_name.dart';
 import 'restic_command_flag_type.dart';
 import 'restic_command_options.dart';
 import 'restic_command_type.dart';

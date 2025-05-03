@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:simplerestic/common/cubits/repository_list_cubit.dart';
-import 'package:simplerestic/common/models/repository_list_model.dart';
 import 'package:yaru/yaru.dart';
 
+import '../../common/cubits/repository_list_cubit.dart';
+import '../../common/models/repository_list_model.dart';
 import '../cubits/create_repository_cubit.dart';
 import 'base_text_field_widget.dart';
 
