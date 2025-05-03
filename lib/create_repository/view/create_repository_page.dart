@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yaru/yaru.dart';
 
-import '../../common/cubits/repository_list_cubit.dart';
+import '../../common/cubits/repository_cubit.dart';
 import '../../common/models/repository_model.dart';
 import '../cubits/create_repository_cubit.dart';
 import '../models/create_repository_model.dart';
@@ -60,14 +60,11 @@ class _CreateRepositoryPageState extends State<CreateRepositoryPage> {
                         },
                       );
                       if (state.isSuccessful && context.mounted) {
-                        context.read<RepositoryListCubit>().addRepository(
+                        context.read<RepositoryCubit>().addRepository(
                               RepositoryModel(
                                 path: state.path!,
                                 passwordFile: state.passwordFile!,
-                                alias: state.isAliasExisting()
-                                    ? state.alias!
-                                    : null,
-                                snapshots: [],
+                                alias: state.alias,
                               ),
                             );
                         context.read<CreateRepositoryCubit>().clear();

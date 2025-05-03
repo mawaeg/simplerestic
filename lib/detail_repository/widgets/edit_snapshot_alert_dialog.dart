@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yaru/yaru.dart';
 
-import '../../common/cubits/repository_list_cubit.dart';
+import '../../common/cubits/snapshot_cubit.dart';
 import '../../common/models/repository_model.dart';
+import '../../common/models/snapshot_model.dart';
 import '../../create_repository/widgets/base_text_field_widget.dart';
 
 class EditSnapshotAlertDialog extends StatelessWidget {
@@ -40,17 +41,17 @@ class EditSnapshotAlertDialog extends StatelessWidget {
             ElevatedButton(
                 onPressed: () {
                   if (_controller.text.isEmpty) {
-                    context
-                        .read<RepositoryListCubit>()
-                        .removeRepositorySnapshot(
-                          repository,
+                    context.read<SnapshotCubit>().removeSnapshotByPath(
+                          repository.id!,
                           path,
                         );
                   } else {
-                    context.read<RepositoryListCubit>().addRepositorySnapshot(
-                          repository,
-                          path,
-                          _controller.text,
+                    context.read<SnapshotCubit>().addSnapshot(
+                          SnapshotModel(
+                            repositoryId: repository.id!,
+                            path: path,
+                            alias: _controller.text,
+                          ),
                         );
                   }
 

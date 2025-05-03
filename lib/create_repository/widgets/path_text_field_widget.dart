@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yaru/yaru.dart';
 
-import '../../common/cubits/repository_list_cubit.dart';
-import '../../common/models/repository_list_model.dart';
+import '../../common/cubits/repository_cubit.dart';
+import '../../common/models/repository_model.dart';
 import '../cubits/create_repository_cubit.dart';
 import 'base_text_field_widget.dart';
 
@@ -40,7 +40,7 @@ class _PathTextFieldWidgetState extends State<PathTextFieldWidget> {
       }
     }
 
-    return BlocBuilder<RepositoryListCubit, RepositoryListModel>(
+    return BlocBuilder<RepositoryCubit, List<RepositoryModel>>(
         builder: (context, state) {
       return BaseTextFieldWidget(
         description: "The path to the repository you want to create / import.",
@@ -64,7 +64,7 @@ class _PathTextFieldWidgetState extends State<PathTextFieldWidget> {
           if (value == null || value.isEmpty) {
             return "Path is required.";
           }
-          if (state.repositoryExistsByPath(value)) {
+          if (state.any((element) => element.path == value)) {
             return "Repository can only be added once.";
           }
           if (!Directory(value).existsSync()) {

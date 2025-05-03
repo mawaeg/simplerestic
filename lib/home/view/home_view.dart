@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yaru/yaru.dart';
 
-import '../../common/cubits/repository_list_cubit.dart';
-import '../../common/models/repository_list_model.dart';
+import '../../common/cubits/repository_cubit.dart';
+import '../../common/models/repository_model.dart';
 import '../../create_repository/view/create_repository_page.dart';
 import '../widgets/create_repository_widget.dart';
 import '../widgets/options_widget.dart';
@@ -15,7 +15,7 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RepositoryListCubit, RepositoryListModel>(
+    return BlocBuilder<RepositoryCubit, List<RepositoryModel>>(
       builder: (context, state) {
         return Scaffold(
           body: YaruMasterDetailPage(
@@ -26,18 +26,16 @@ class HomeView extends StatelessWidget {
               actions: [OptionsWidget()],
             ),
             paneLayoutDelegate: YaruFixedPaneDelegate(paneSize: 400),
-            length: state.getRepositories().length,
+            length: state.length,
             tileBuilder: (context, index, selected, availableWidth) {
               return RepositoryListYaruMasterTile(
-                path: state.getRepositories()[index].path,
-                alias: state.getRepositories()[index].alias,
+                path: state[index].path,
+                alias: state[index].alias,
               );
             },
             pageBuilder: (context, index) {
               return RepositoryDetailPageWidget(
-                path: state.getRepositories()[index].path,
-                alias: state.getRepositories()[index].alias,
-                passwordFile: state.getRepositories()[index].passwordFile,
+                repository: state[index],
               );
             },
             emptyBuilder: (context) {
