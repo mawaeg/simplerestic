@@ -4,6 +4,7 @@ import 'package:yaru/yaru.dart';
 
 import '../../common/cubits/repository_list_cubit.dart';
 import '../../common/models/repository_list_model.dart';
+import '../../create_repository/view/create_repository_page.dart';
 import '../widgets/create_repository_widget.dart';
 import '../widgets/options_widget.dart';
 import '../widgets/repository_detail_page_widget.dart';
@@ -36,6 +37,28 @@ class HomeView extends StatelessWidget {
               return RepositoryDetailPageWidget(
                 path: state.getRepositories()[index].path,
                 alias: state.getRepositories()[index].alias,
+                passwordFile: state.getRepositories()[index].passwordFile,
+              );
+            },
+            emptyBuilder: (context) {
+              return Scaffold(
+                appBar: YaruWindowTitleBar(
+                  title: Text("SimpleRestic"),
+                  backgroundColor: Colors.transparent,
+                  leading: Center(child: CreateRepositoryWidget()),
+                  actions: [OptionsWidget()],
+                ),
+                body: Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (_) => CreateRepositoryPage()),
+                      );
+                    },
+                    child: Text("Create a repository."),
+                  ),
+                ),
               );
             },
           ),

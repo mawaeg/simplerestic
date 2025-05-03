@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:yaru/yaru.dart';
 
+import '../../detail_repository/views/snapshot_list_view.dart';
 import 'create_repository_widget.dart';
 
 class RepositoryDetailPageWidget extends StatelessWidget {
   final String path;
   final String? alias;
+  final String passwordFile;
 
   const RepositoryDetailPageWidget({
     super.key,
     required this.path,
+    required this.passwordFile,
     this.alias,
   });
 
@@ -21,8 +24,10 @@ class RepositoryDetailPageWidget extends StatelessWidget {
         backgroundColor: Colors.transparent,
         leading: Center(child: CreateRepositoryWidget()),
       ),
-      body: Center(
-        child: Text(alias ?? path),
+      body: SnapshotListView(
+        path: path,
+        alias: alias,
+        passwordFile: passwordFile,
       ),
     );
   }
