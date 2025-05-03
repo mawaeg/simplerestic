@@ -67,6 +67,7 @@ class _CreateRepositoryPageState extends State<CreateRepositoryPage> {
                                 alias: state.isAliasExisting()
                                     ? state.alias!
                                     : null,
+                                snapshots: [],
                               ),
                             );
                         context.read<CreateRepositoryCubit>().clear();

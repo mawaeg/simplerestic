@@ -27,7 +27,7 @@ void main() {
       expect(model.alias, testAlias);
 
       expect(model.snapshots, isNotNull);
-      expect(model.snapshots!.length, snapshots.length);
+      expect(model.snapshots.length, snapshots.length);
 
       Map<String, dynamic> toJsonResult = model.toJson();
       expect(toJsonResult, json);
@@ -56,7 +56,7 @@ void main() {
       expect(model.alias, testAlias);
 
       expect(model.snapshots, isNotNull);
-      expect(model.snapshots!.length, snapshots.length);
+      expect(model.snapshots.length, snapshots.length);
 
       Map<String, dynamic> toJsonResult = model.toJson();
       expect(toJsonResult, json);
@@ -79,7 +79,7 @@ void main() {
       expect(model.path, testPath);
       expect(model.passwordFile, testPasswordFile);
       expect(model.alias, testAlias);
-      expect(model.snapshots, isNull);
+      expect(model.snapshots, []);
 
       Map<String, dynamic> toJsonResult = model.toJson();
       expect(toJsonResult, json);

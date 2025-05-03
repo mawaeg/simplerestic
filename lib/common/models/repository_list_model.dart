@@ -20,6 +20,10 @@ class RepositoryListModel extends Equatable {
     return _repositories;
   }
 
+  RepositoryModel getRepositoryByPath(String path) {
+    return _repositories.firstWhere((element) => element.path == path);
+  }
+
   bool repositoryExistsByPath(String path) {
     return _repositories.any((element) => element.path == path);
   }

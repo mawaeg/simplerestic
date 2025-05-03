@@ -38,6 +38,7 @@ void main() {
       final RepositoryModel testRepository = RepositoryModel(
         path: "testPath",
         passwordFile: "testPasswordFile",
+        snapshots: [],
       );
 
       final RepositoryListModel model = RepositoryListModel();
