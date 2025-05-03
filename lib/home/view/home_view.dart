@@ -4,7 +4,7 @@ import 'package:yaru/yaru.dart';
 
 import '../../common/cubits/repository_cubit.dart';
 import '../../common/models/repository_model.dart';
-import '../../create_repository/view/create_repository_page.dart';
+import '../../create_repository/view/create_repository_alert_dialog.dart';
 import '../widgets/create_repository_widget.dart';
 import '../widgets/options_widget.dart';
 import '../widgets/repository_detail_page_widget.dart';
@@ -28,10 +28,7 @@ class HomeView extends StatelessWidget {
             paneLayoutDelegate: YaruFixedPaneDelegate(paneSize: 400),
             length: state.length,
             tileBuilder: (context, index, selected, availableWidth) {
-              return RepositoryListYaruMasterTile(
-                path: state[index].path,
-                alias: state[index].alias,
-              );
+              return RepositoryListYaruMasterTile(repository: state[index]);
             },
             pageBuilder: (context, index) {
               return RepositoryDetailPageWidget(
@@ -51,7 +48,7 @@ class HomeView extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                            builder: (_) => CreateRepositoryPage()),
+                            builder: (_) => CreateRepositoryAlertDialog()),
                       );
                     },
                     child: Text("Create a repository."),

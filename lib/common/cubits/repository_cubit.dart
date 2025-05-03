@@ -16,6 +16,16 @@ class RepositoryCubit extends Cubit<List<RepositoryModel>> {
     emit(List.of(state)..add(newModel));
   }
 
+  void updateRepository(RepositoryModel repository) async {
+    await DatabaseManager().updateRepository(repository);
+    int index = state.indexWhere((element) => element.id == repository.id);
+    emit(
+      List.of(state)
+        ..removeAt(index)
+        ..insert(index, repository),
+    );
+  }
+
   void removeRepository(RepositoryModel repository) async {
     await DatabaseManager().deleteRepository(repository);
     emit(List.of(state)..remove(repository));

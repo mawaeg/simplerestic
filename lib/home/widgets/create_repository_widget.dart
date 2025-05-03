@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yaru/yaru.dart';
 
 import '../../common/widgets/simple_restic_yaru_option_button.dart';
-import '../../create_repository/view/create_repository_page.dart';
+import '../../create_repository/view/create_repository_alert_dialog.dart';
 
 class CreateRepositoryWidget extends StatelessWidget {
   const CreateRepositoryWidget({super.key});
@@ -10,9 +10,12 @@ class CreateRepositoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SimpleResticYaruOptionButton(
-      onPressed: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => CreateRepositoryPage()),
+      onPressed: () async {
+        await showDialog(
+          context: context,
+          builder: (context) {
+            return CreateRepositoryAlertDialog();
+          },
         );
       },
       child: const Icon(YaruIcons.plus),

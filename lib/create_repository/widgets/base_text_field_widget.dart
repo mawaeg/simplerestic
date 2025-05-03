@@ -7,6 +7,7 @@ class BaseTextFieldWidget extends StatelessWidget {
   final Widget? suffixIcon;
   final void Function(String)? onChanged;
   final String? Function(String?)? validator;
+  final bool readOnly;
 
   const BaseTextFieldWidget({
     required this.description,
@@ -15,6 +16,7 @@ class BaseTextFieldWidget extends StatelessWidget {
     this.suffixIcon,
     this.onChanged,
     this.validator,
+    this.readOnly = false,
     super.key,
   });
 
@@ -32,6 +34,7 @@ class BaseTextFieldWidget extends StatelessWidget {
             controller: controller,
             onChanged: onChanged,
             validator: validator,
+            readOnly: readOnly,
             decoration: InputDecoration(
               suffixIcon: suffixIcon,
               hintText: hintText,

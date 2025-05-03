@@ -1,8 +1,8 @@
 class RepositoryModel {
   final int? id;
   final String path;
-  final String passwordFile;
-  final String? alias;
+  String passwordFile;
+  String? alias;
 
   RepositoryModel({
     this.id,

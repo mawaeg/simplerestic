@@ -5,7 +5,8 @@ import '../cubits/create_repository_cubit.dart';
 import 'base_text_field_widget.dart';
 
 class AliasTextFieldWidget extends StatefulWidget {
-  const AliasTextFieldWidget({super.key});
+  final String? initialValue;
+  const AliasTextFieldWidget({super.key, this.initialValue});
 
   @override
   State<AliasTextFieldWidget> createState() => _AliasTextFieldWidgetState();
@@ -17,7 +18,10 @@ class _AliasTextFieldWidgetState extends State<AliasTextFieldWidget> {
   @override
   void initState() {
     super.initState();
-    _aliasController = TextEditingController();
+    _aliasController = TextEditingController(text: widget.initialValue);
+    if (widget.initialValue != null) {
+      context.read<CreateRepositoryCubit>().setAlias(widget.initialValue);
+    }
   }
 
   @override

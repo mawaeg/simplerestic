@@ -11,7 +11,13 @@ import '../cubits/create_repository_cubit.dart';
 import 'base_text_field_widget.dart';
 
 class PathTextFieldWidget extends StatefulWidget {
-  const PathTextFieldWidget({super.key});
+  final bool readOnly;
+  final String? initialValue;
+  const PathTextFieldWidget({
+    super.key,
+    this.readOnly = false,
+    this.initialValue,
+  });
 
   @override
   State<PathTextFieldWidget> createState() => _PathTextFieldWidgetState();
@@ -23,7 +29,10 @@ class _PathTextFieldWidgetState extends State<PathTextFieldWidget> {
   @override
   void initState() {
     super.initState();
-    _pathController = TextEditingController();
+    _pathController = TextEditingController(text: widget.initialValue);
+    if (widget.initialValue != null) {
+      context.read<CreateRepositoryCubit>().setPath(widget.initialValue);
+    }
   }
 
   @override
@@ -64,7 +73,8 @@ class _PathTextFieldWidgetState extends State<PathTextFieldWidget> {
           if (value == null || value.isEmpty) {
             return "Path is required.";
           }
-          if (state.any((element) => element.path == value)) {
+          if (state.any((element) => element.path == value) &&
+              !widget.readOnly) {
             return "Repository can only be added once.";
           }
           if (!Directory(value).existsSync()) {
@@ -72,6 +82,7 @@ class _PathTextFieldWidgetState extends State<PathTextFieldWidget> {
           }
           return null;
         },
+        readOnly: widget.readOnly,
       );
     });
   }

@@ -18,10 +18,11 @@ class SnapshotCubit extends Cubit<List<SnapshotModel>> {
 
   void updateSnapshot(SnapshotModel snapshot) async {
     await DatabaseManager().updateSnapshot(snapshot);
+    int index = state.indexWhere((element) => element.id == snapshot.id);
     emit(
       List.of(state)
-        ..removeWhere((element) => element.id == snapshot.id)
-        ..add(snapshot),
+        ..removeAt(index)
+        ..insert(index, snapshot),
     );
   }
 

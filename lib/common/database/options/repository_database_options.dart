@@ -22,7 +22,7 @@ mixin RepositoryDatabaseOptions implements DatabaseOptionsBase {
   Future<void> updateRepository(RepositoryModel repository) async {
     Database database = await init();
     await database.update(
-      "repository",
+      "repositories",
       repository.toMap(),
       where: "id = ?",
       whereArgs: [repository.id],
@@ -57,7 +57,7 @@ mixin RepositoryDatabaseOptions implements DatabaseOptionsBase {
   Future<void> deleteRepository(RepositoryModel repository) async {
     Database database = await init();
     await database
-        .delete("repository", where: "id = ?", whereArgs: [repository.id]);
+        .delete("repositories", where: "id = ?", whereArgs: [repository.id]);
     await close(database);
   }
 }

@@ -9,7 +9,11 @@ import '../cubits/create_repository_cubit.dart';
 import 'base_text_field_widget.dart';
 
 class PasswordTextFieldWidget extends StatefulWidget {
-  const PasswordTextFieldWidget({super.key});
+  final String? initialValue;
+  const PasswordTextFieldWidget({
+    super.key,
+    this.initialValue,
+  });
 
   @override
   State<PasswordTextFieldWidget> createState() =>
@@ -22,7 +26,12 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
   @override
   void initState() {
     super.initState();
-    _passwordFileController = TextEditingController();
+    _passwordFileController = TextEditingController(text: widget.initialValue);
+    if (widget.initialValue != null) {
+      context
+          .read<CreateRepositoryCubit>()
+          .setPasswordFile(widget.initialValue);
+    }
   }
 
   @override

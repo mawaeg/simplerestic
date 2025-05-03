@@ -1,22 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:yaru/yaru.dart';
 
+import '../../common/models/repository_model.dart';
+import '../../common/widgets/simple_restic_yaru_option_button.dart';
+import '../../create_repository/view/create_repository_alert_dialog.dart';
+
 class RepositoryListYaruMasterTile extends StatelessWidget {
-  final String path;
-  final String? alias;
+  final RepositoryModel repository;
 
   const RepositoryListYaruMasterTile({
     super.key,
-    required this.path,
-    required this.alias,
+    required this.repository,
   });
   @override
   Widget build(BuildContext context) {
     return YaruMasterTile(
       title: Text(
-        alias ?? path,
+        repository.alias ?? repository.path,
       ),
-      subtitle: alias != null ? Text(path) : null,
+      subtitle: repository.alias != null ? Text(repository.path) : null,
+      trailing: SimpleResticYaruOptionButton(
+        onPressed: () async {
+          await showDialog(
+            context: context,
+            builder: (context) {
+              return CreateRepositoryAlertDialog(
+                create: false,
+                repository: repository,
+              );
+            },
+          );
+        },
+        child: const Icon(YaruIcons.settings),
+      ),
     );
   }
 }
