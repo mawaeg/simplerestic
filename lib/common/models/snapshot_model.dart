@@ -2,7 +2,7 @@ class SnapshotModel {
   final int? id;
   final int repositoryId;
   final String path;
-  final String alias;
+  String alias;
 
   SnapshotModel({
     this.id,

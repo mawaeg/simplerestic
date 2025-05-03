@@ -37,6 +37,7 @@ class SnapshotListTileWidget extends StatelessWidget {
             builder: (context) {
               return EditSnapshotAlertDialog(
                 repository: repository,
+                snapshot: snapshot,
                 path: path,
               );
             },

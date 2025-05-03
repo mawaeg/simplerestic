@@ -9,14 +9,18 @@ import '../../create_repository/widgets/base_text_field_widget.dart';
 
 class EditSnapshotAlertDialog extends StatelessWidget {
   final RepositoryModel repository;
+  final SnapshotModel? snapshot;
   final String path;
-  final TextEditingController _controller = TextEditingController();
+  late final TextEditingController _controller;
 
   EditSnapshotAlertDialog({
     super.key,
     required this.repository,
+    this.snapshot,
     required this.path,
-  });
+  }) {
+    _controller = TextEditingController(text: snapshot?.alias);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +44,14 @@ class EditSnapshotAlertDialog extends StatelessWidget {
             ),
             ElevatedButton(
                 onPressed: () {
-                  if (_controller.text.isEmpty) {
-                    context.read<SnapshotCubit>().removeSnapshotByPath(
-                          repository.id!,
-                          path,
-                        );
+                  if (snapshot != null && _controller.text.isEmpty) {
+                    context
+                        .read<SnapshotCubit>()
+                        .removeSnapshotByPath(repository.id!, path);
+                  } else if (snapshot != null && _controller.text.isNotEmpty) {
+                    context
+                        .read<SnapshotCubit>()
+                        .updateSnapshot(snapshot!..alias = _controller.text);
                   } else {
                     context.read<SnapshotCubit>().addSnapshot(
                           SnapshotModel(
@@ -54,7 +61,6 @@ class EditSnapshotAlertDialog extends StatelessWidget {
                           ),
                         );
                   }
-
                   Navigator.maybePop(context);
                 },
                 child: Text("Update"))

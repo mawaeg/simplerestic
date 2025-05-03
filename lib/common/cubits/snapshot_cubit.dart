@@ -16,6 +16,15 @@ class SnapshotCubit extends Cubit<List<SnapshotModel>> {
     emit(List.of(state)..add(newModel));
   }
 
+  void updateSnapshot(SnapshotModel snapshot) async {
+    await DatabaseManager().updateSnapshot(snapshot);
+    emit(
+      List.of(state)
+        ..removeWhere((element) => element.id == snapshot.id)
+        ..add(snapshot),
+    );
+  }
+
   void removeSnapshot(SnapshotModel snapshot) async {
     await DatabaseManager().deleteSnapshot(snapshot);
     emit(List.of(state)..remove(snapshot));
