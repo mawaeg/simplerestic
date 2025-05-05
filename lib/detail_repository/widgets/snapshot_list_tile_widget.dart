@@ -4,6 +4,7 @@ import 'package:yaru/yaru.dart';
 import '../../common/models/repository_model.dart';
 import '../../common/models/snapshot_model.dart';
 import '../../common/widgets/simple_restic_yaru_option_button.dart';
+import '../../run_backup/views/run_backup_alert_dialog.dart';
 import 'edit_snapshot_alert_dialog.dart';
 
 class SnapshotListTileWidget extends StatelessWidget {
@@ -24,7 +25,17 @@ class SnapshotListTileWidget extends StatelessWidget {
       title: Text(snapshot?.alias ?? path),
       subtitle: snapshot?.alias != null ? Text(path) : null,
       leading: SimpleResticYaruOptionButton(
-        onPressed: null,
+        onPressed: () async {
+          await showDialog(
+            context: context,
+            builder: (context) {
+              return RunBackupAlertDialog(
+                repository: repository,
+                path: path,
+              );
+            },
+          );
+        },
         child: Icon(
           YaruIcons.media_play,
           color: Theme.of(context).primaryColor,

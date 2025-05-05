@@ -80,7 +80,11 @@ class ResticCommandExecutor {
 
     // Yield the exit code of the process.
     var exitCode = await process.exitCode;
+    //As the exit codes would be yielded directly after the last regular message, the StreamBuilder would always drop this message.
+    await Future.delayed(Duration(milliseconds: 100));
     yield ResticReturnType(exitCode);
+
+    return;
   }
 
   ResticScriptingBaseType? parseJson(String rawJson) {
