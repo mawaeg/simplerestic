@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yaru/yaru.dart';
 
 import '../../common/cubits/snapshot_cubit.dart';
+import '../../common/cubits/snapshot_rebuild_cubit.dart';
 import '../../common/models/repository_model.dart';
 import '../../common/models/snapshot_model.dart';
 import '../utils/create_snapshot_list_model.dart';
@@ -18,34 +19,40 @@ class SnapshotListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: createSnapshotListModel(repository.path, repository.passwordFile),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return Center(
-            child: YaruCircularProgressIndicator(),
-          );
-        }
-        return BlocBuilder<SnapshotCubit, List<SnapshotModel>>(
-          builder: (context, state) {
-            return ListView.separated(
-                itemBuilder: (context, index) {
-                  String path = snapshot.data!.snapshots.keys.toList()[index];
-                  SnapshotModel? snapshotModel = state
-                      .where((element) => element.path == path)
-                      .firstOrNull;
-                  return SnapshotListTileWidget(
-                    repository: repository,
-                    path: path,
-                    snapshot: snapshotModel,
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return SizedBox(
-                    height: 10,
-                  );
-                },
-                itemCount: snapshot.data!.length);
+    return BlocBuilder<SnapshotRebuildCubit, bool>(
+      builder: (context, state) {
+        return FutureBuilder(
+          future:
+              createSnapshotListModel(repository.path, repository.passwordFile),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: YaruCircularProgressIndicator(),
+              );
+            }
+            return BlocBuilder<SnapshotCubit, List<SnapshotModel>>(
+              builder: (context, state) {
+                return ListView.separated(
+                    itemBuilder: (context, index) {
+                      String path =
+                          snapshot.data!.snapshots.keys.toList()[index];
+                      SnapshotModel? snapshotModel = state
+                          .where((element) => element.path == path)
+                          .firstOrNull;
+                      return SnapshotListTileWidget(
+                        repository: repository,
+                        path: path,
+                        snapshot: snapshotModel,
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return SizedBox(
+                        height: 10,
+                      );
+                    },
+                    itemCount: snapshot.data!.length);
+              },
+            );
           },
         );
       },

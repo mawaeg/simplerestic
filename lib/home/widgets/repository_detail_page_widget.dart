@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:yaru/yaru.dart';
 
 import '../../common/models/repository_model.dart';
+import 'create_snapshot_widget.dart';
 import '../../detail_repository/views/snapshot_list_view.dart';
-import 'create_repository_widget.dart';
 
 class RepositoryDetailPageWidget extends StatelessWidget {
   final RepositoryModel repository;
@@ -19,7 +19,10 @@ class RepositoryDetailPageWidget extends StatelessWidget {
       appBar: YaruWindowTitleBar(
         title: Text(repository.alias ?? repository.path),
         backgroundColor: Colors.transparent,
-        leading: Center(child: CreateRepositoryWidget()),
+        leading: Center(
+            child: CreateSnapshotWidget(
+          repository: repository,
+        )),
       ),
       body: SnapshotListView(repository: repository),
     );
