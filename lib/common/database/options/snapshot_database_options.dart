@@ -14,7 +14,7 @@ mixin SnapshotDatabaseOptions implements DatabaseOptionsBase {
     return SnapshotModel(
       id: id,
       repositoryId: snapshot.repositoryId,
-      path: snapshot.path,
+      path: snapshot.pathList,
       alias: snapshot.alias,
     );
   }
@@ -80,12 +80,12 @@ mixin SnapshotDatabaseOptions implements DatabaseOptionsBase {
     await close(database);
   }
 
-  Future<void> deleteSnapshotByPath(int repositoryId, String path) async {
+  Future<void> deleteSnapshotByPath(int repositoryId, List<String> path) async {
     Database database = await init();
     await database.delete(
       "snapshots",
       where: "repositoryId = ? AND path = ?",
-      whereArgs: [repositoryId, path],
+      whereArgs: [repositoryId, SnapshotModel.getPathListAsString(path)],
     );
     await close(database);
   }

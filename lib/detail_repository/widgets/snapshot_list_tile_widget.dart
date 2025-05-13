@@ -16,14 +16,17 @@ class SnapshotListTileWidget extends StatelessWidget {
   });
 
   final RepositoryModel repository;
-  final String path;
+  final List<String> path;
   final SnapshotModel? snapshot;
 
   @override
   Widget build(BuildContext context) {
+    String formattedPath = SnapshotModel.getPathListAsFormattedString(path);
     return YaruTile(
-      title: Text(snapshot?.alias ?? path),
-      subtitle: snapshot?.alias != null ? Text(path) : null,
+      title: Text(
+        snapshot?.alias ?? formattedPath,
+      ),
+      subtitle: snapshot?.alias != null ? Text(formattedPath) : null,
       leading: SimpleResticYaruOptionButton(
         onPressed: () async {
           await showDialog(
@@ -31,7 +34,7 @@ class SnapshotListTileWidget extends StatelessWidget {
             builder: (context) {
               return RunBackupAlertDialog(
                 repository: repository,
-                path: path,
+                path: formattedPath,
               );
             },
           );

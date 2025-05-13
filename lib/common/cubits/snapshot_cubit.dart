@@ -31,7 +31,7 @@ class SnapshotCubit extends Cubit<List<SnapshotModel>> {
     emit(List.of(state)..remove(snapshot));
   }
 
-  void removeSnapshotByPath(int repositoryId, String path) async {
+  void removeSnapshotByPath(int repositoryId, List<String> path) async {
     await DatabaseManager().deleteSnapshotByPath(repositoryId, path);
     emit(
       List.of(state)

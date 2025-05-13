@@ -7,6 +7,7 @@ import '../../common/models/repository_model.dart';
 import '../../common/models/snapshot_model.dart';
 import '../../run_backup/views/run_backup_alert_dialog.dart';
 
+//ToDo Add support for multiple paths
 class CreateSnapshotButtonWidget extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final RepositoryModel repository;
@@ -30,7 +31,7 @@ class CreateSnapshotButtonWidget extends StatelessWidget {
             context.read<SnapshotCubit>().addSnapshot(
                   SnapshotModel(
                     repositoryId: repository.id!,
-                    path: pathController.text,
+                    path: [pathController.text],
                     alias: aliasController.text,
                   ),
                 );

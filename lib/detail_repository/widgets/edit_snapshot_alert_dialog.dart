@@ -10,7 +10,7 @@ import '../../create_repository/widgets/base_text_field_widget.dart';
 class EditSnapshotAlertDialog extends StatelessWidget {
   final RepositoryModel repository;
   final SnapshotModel? snapshot;
-  final String path;
+  final List<String> path;
   late final TextEditingController _controller;
 
   EditSnapshotAlertDialog({

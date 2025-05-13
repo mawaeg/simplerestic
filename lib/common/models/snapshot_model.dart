@@ -1,21 +1,37 @@
 class SnapshotModel {
   final int? id;
   final int repositoryId;
-  final String path;
+  final List<String> pathList;
   String alias;
+
+  static const String _separator = "/;*;\\";
+
+  String get path => getPathListAsFormattedString(pathList);
+
+  static String getPathListAsFormattedString(List<String> path) {
+    return path.join(", ");
+  }
+
+  static String getPathListAsString(List<String> path) {
+    return path.join(_separator);
+  }
+
+  static List<String> getPathStringAsList(String path) {
+    return path.split(_separator);
+  }
 
   SnapshotModel({
     this.id,
     required this.repositoryId,
-    required this.path,
+    required List<String> path,
     required this.alias,
-  });
+  }) : pathList = path;
 
   Map<String, Object?> toMap() {
     return {
       "id": id,
       "repositoryId": repositoryId,
-      "path": path,
+      "path": getPathListAsString(pathList),
       "alias": alias,
     };
   }
@@ -24,7 +40,7 @@ class SnapshotModel {
     return SnapshotModel(
       id: map['id'],
       repositoryId: map['repositoryId'],
-      path: map['path'],
+      path: getPathStringAsList(map['path']),
       alias: map['alias'],
     );
   }
