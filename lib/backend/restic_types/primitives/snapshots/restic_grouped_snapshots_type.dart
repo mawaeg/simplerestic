@@ -13,7 +13,7 @@ class ResticGroupedSnapshotsType extends ResticJsonType {
     Map<ResticGroupedSnapshotKeyType, List<ResticSnapshotsObjectType>>
         snapshots = {};
     for (var snapshotGroup in json) {
-      dynamic key =
+      ResticGroupedSnapshotKeyType key =
           ResticGroupedSnapshotKeyType.fromJson(snapshotGroup["group_key"]);
       List<ResticSnapshotsObjectType> groupSnapshots = [];
       for (var snapshot in snapshotGroup["snapshots"]) {

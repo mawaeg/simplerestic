@@ -35,7 +35,7 @@ class SnapshotListView extends StatelessWidget {
                 return ListView.separated(
                     itemBuilder: (context, index) {
                       List<String> path =
-                          snapshot.data!.snapshots.keys.toList()[index];
+                          snapshot.data!.snapshots.keys.toList()[index].paths!;
                       SnapshotModel? snapshotModel = state
                           .where((element) =>
                               SnapshotModel.getPathListAsString(
@@ -53,7 +53,7 @@ class SnapshotListView extends StatelessWidget {
                         height: 10,
                       );
                     },
-                    itemCount: snapshot.data!.length);
+                    itemCount: snapshot.data!.snapshots.length);
               },
             );
           },
