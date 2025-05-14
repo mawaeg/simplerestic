@@ -48,6 +48,8 @@ class SnapshotListView extends StatelessWidget {
                         repository: repository,
                         path: path,
                         snapshot: snapshotModel,
+                        snapshots: snapshot.data!.snapshots[
+                            snapshot.data!.snapshots.keys.toList()[index]]!,
                       );
                     },
                     separatorBuilder: (context, index) {

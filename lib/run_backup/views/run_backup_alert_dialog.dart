@@ -29,6 +29,7 @@ class RunBackupAlertDialog extends StatelessWidget {
       title: YaruDialogTitleBar(
         title: Text("Performing backup"),
         // ToDo Add mechanism to properly abort backup
+        // ToDo Trigger update of snapshots for last backup indication
         isClosable: true,
       ),
       content: SizedBox(
