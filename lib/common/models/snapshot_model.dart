@@ -20,6 +20,10 @@ class SnapshotModel {
     return path.split(_separator);
   }
 
+  static bool arePathListsIdentical(List<String> path1, List<String> path2) {
+    return getPathListAsString(path1) == getPathListAsString(path2);
+  }
+
   SnapshotModel({
     this.id,
     required this.repositoryId,

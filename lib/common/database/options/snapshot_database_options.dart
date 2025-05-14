@@ -19,13 +19,13 @@ mixin SnapshotDatabaseOptions implements DatabaseOptionsBase {
     );
   }
 
-  Future<void> updateSnapshot(SnapshotModel snapshot) async {
+  Future<void> updateSnapshot(int repositoryId, SnapshotModel snapshot) async {
     Database database = await init();
     await database.update(
       "snapshots",
       snapshot.toMap(),
-      where: "id = ?",
-      whereArgs: [snapshot.id],
+      where: "id = ? AND repositoryId = ?",
+      whereArgs: [snapshot.id, repositoryId],
     );
   }
 

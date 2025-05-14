@@ -52,9 +52,10 @@ class EditSnapshotAlertDialog extends StatelessWidget {
                         .read<SnapshotCubit>()
                         .removeSnapshotByPath(repository.id!, path);
                   } else if (snapshot != null && _controller.text.isNotEmpty) {
-                    context
-                        .read<SnapshotCubit>()
-                        .updateSnapshot(snapshot!..alias = _controller.text);
+                    context.read<SnapshotCubit>().updateSnapshot(
+                          repository.id!,
+                          snapshot!..alias = _controller.text,
+                        );
                   } else {
                     context.read<SnapshotCubit>().addSnapshot(
                           SnapshotModel(

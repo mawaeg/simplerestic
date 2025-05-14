@@ -16,8 +16,8 @@ class SnapshotCubit extends Cubit<List<SnapshotModel>> {
     emit(List.of(state)..add(newModel));
   }
 
-  void updateSnapshot(SnapshotModel snapshot) async {
-    await DatabaseManager().updateSnapshot(snapshot);
+  void updateSnapshot(int repositoryId, SnapshotModel snapshot) async {
+    await DatabaseManager().updateSnapshot(repositoryId, snapshot);
     int index = state.indexWhere((element) => element.id == snapshot.id);
     emit(
       List.of(state)
@@ -36,7 +36,8 @@ class SnapshotCubit extends Cubit<List<SnapshotModel>> {
     emit(
       List.of(state)
         ..removeWhere((element) =>
-            element.repositoryId == repositoryId && element.path == path),
+            element.repositoryId == repositoryId &&
+            SnapshotModel.arePathListsIdentical(element.pathList, path)),
     );
   }
 }

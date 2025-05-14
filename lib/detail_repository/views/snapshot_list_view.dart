@@ -37,10 +37,12 @@ class SnapshotListView extends StatelessWidget {
                       List<String> path =
                           snapshot.data!.snapshots.keys.toList()[index].paths!;
                       SnapshotModel? snapshotModel = state
-                          .where((element) =>
-                              SnapshotModel.getPathListAsString(
-                                  element.pathList) ==
-                              SnapshotModel.getPathListAsString(path))
+                          .where(
+                            (element) =>
+                                SnapshotModel.arePathListsIdentical(
+                                    element.pathList, path) &&
+                                element.repositoryId == repository.id!,
+                          )
                           .firstOrNull;
                       return SnapshotListTileWidget(
                         repository: repository,
