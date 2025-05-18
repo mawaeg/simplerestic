@@ -6,6 +6,7 @@ import '../../common/cubits/snapshot_cubit.dart';
 import '../../common/cubits/snapshot_rebuild_cubit.dart';
 import '../../common/models/repository_model.dart';
 import '../../common/models/snapshot_model.dart';
+import '../../create_snapshot/views/create_snapshot_alert_dialog.dart';
 import '../utils/create_snapshot_list_model.dart';
 import '../widgets/snapshot_list_tile_widget.dart';
 
@@ -25,10 +26,27 @@ class SnapshotListView extends StatelessWidget {
           future:
               createSnapshotListModel(repository.path, repository.passwordFile),
           builder: (context, snapshot) {
-            if (!snapshot.hasData) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: YaruCircularProgressIndicator(),
               );
+            }
+            if (!snapshot.hasData) {
+              return Center(
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                      ),
+                      onPressed: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return CreateSnapshotAlertDialog(
+                                repository: repository);
+                          },
+                        );
+                      },
+                      child: Text("Create a snapshot")));
             }
             return BlocBuilder<SnapshotCubit, List<SnapshotModel>>(
               builder: (context, state) {
