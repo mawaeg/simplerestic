@@ -8,7 +8,9 @@ import '../widgets/alias_text_field_widget.dart';
 import '../widgets/create_repository_button_widget.dart';
 import '../widgets/password_text_field_widget.dart';
 import '../widgets/path_text_field_widget.dart';
+import '../widgets/repository_interval_select_text_field_widget.dart';
 
+//ToDo make StatelessWidget (working in create snapshot)
 class CreateRepositoryAlertDialog extends StatefulWidget {
   final bool create;
   final RepositoryModel? repository;
@@ -41,7 +43,7 @@ class _CreateRepositoryAlertDialogState
         },
       ),
       content: SizedBox(
-        height: 311,
+        height: 391,
         child: Form(
           key: _formKey,
           child: Column(
@@ -58,6 +60,10 @@ class _CreateRepositoryAlertDialogState
               ),
               AliasTextFieldWidget(
                 initialValue: !widget.create ? widget.repository!.alias : null,
+              ),
+              RepositoryIntervalSelectTextFieldWidget(
+                initialInterval:
+                    !widget.create ? widget.repository!.snapshotInterval : null,
               ),
               CreateRepositoryButtonWidget(
                 formKey: _formKey,

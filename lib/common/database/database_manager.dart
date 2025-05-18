@@ -21,7 +21,7 @@ class DatabaseManager with RepositoryDatabaseOptions, SnapshotDatabaseOptions {
     await database.execute("PRAGMA foreign_keys = ON");
 
     await database.execute(
-        "CREATE TABLE IF NOT EXISTS repositories (id INTEGER PRIMARY KEY NOT NULL, path TEXT NOT NULL, passwordFile TEXT NOT NULL, alias TEXT);");
+        "CREATE TABLE IF NOT EXISTS repositories (id INTEGER PRIMARY KEY NOT NULL, path TEXT NOT NULL, passwordFile TEXT NOT NULL, snapshotInterval INTEGER NOT NULL, alias TEXT);");
     await database.execute(
         "CREATE TABLE IF NOT EXISTS snapshots (id INTEGER PRIMARY KEY NOT NULL, repositoryId INTEGER NOT NULL, path TEXT NOT NULL, alias TEXT, CONSTRAINT repositoryIdFK FOREIGN KEY(repositoryId) REFERENCES repositories(id) ON DELETE CASCADE);");
 

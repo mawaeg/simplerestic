@@ -38,6 +38,7 @@ class CreateRepositoryButtonWidget extends StatelessWidget {
                       RepositoryModel(
                         path: state.path!,
                         passwordFile: state.passwordFile!,
+                        snapshotInterval: state.snapshotInterval!,
                         alias: state.alias,
                       ),
                     );
@@ -45,7 +46,8 @@ class CreateRepositoryButtonWidget extends StatelessWidget {
                 context.read<RepositoryCubit>().updateRepository(
                       repository!
                         ..passwordFile = state.passwordFile!
-                        ..alias = state.alias,
+                        ..alias = state.alias
+                        ..snapshotInterval = state.snapshotInterval!,
                     );
               }
 

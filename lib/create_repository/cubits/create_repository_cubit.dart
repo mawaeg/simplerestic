@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../common/models/snapshot_interval_options_enum.dart';
 import '../models/create_repository_model.dart';
 
 class CreateRepositoryCubit extends Cubit<CreateRepositoryModel> {
@@ -17,6 +18,29 @@ class CreateRepositoryCubit extends Cubit<CreateRepositoryModel> {
 
   void setAlias(String? alias) {
     state.alias = alias;
+    emit(state);
+  }
+
+  void setInterval(int interval, SnapshotIntervalOptionsEnum intervalOption) {
+    final Duration duration;
+    switch (intervalOption) {
+      case SnapshotIntervalOptionsEnum.hours:
+        duration = Duration(hours: interval);
+        break;
+      case SnapshotIntervalOptionsEnum.days:
+        duration = Duration(days: interval);
+        break;
+      case SnapshotIntervalOptionsEnum.weeks:
+        duration = Duration(days: interval * 7);
+        break;
+      case SnapshotIntervalOptionsEnum.months:
+        duration = Duration(days: interval * 31);
+        break;
+      case SnapshotIntervalOptionsEnum.years:
+        duration = Duration(days: interval * 365);
+        break;
+    }
+    state.snapshotInterval = duration;
     emit(state);
   }
 

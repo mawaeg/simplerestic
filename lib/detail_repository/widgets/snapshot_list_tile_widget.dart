@@ -33,6 +33,7 @@ class SnapshotListTileWidget extends StatelessWidget {
       subtitle: SnapshotListTileSubtitleWidget(
         formattedPath: formattedPath,
         snapshots: snapshots,
+        repository: repository,
         snapshot: snapshot,
       ),
       // subtitle: snapshot?.alias != null

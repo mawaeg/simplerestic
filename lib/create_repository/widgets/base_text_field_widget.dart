@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class BaseTextFieldWidget extends StatelessWidget {
   final String description;
@@ -8,6 +9,7 @@ class BaseTextFieldWidget extends StatelessWidget {
   final void Function(String)? onChanged;
   final String? Function(String?)? validator;
   final bool readOnly;
+  final List<TextInputFormatter>? inputFormatters;
 
   const BaseTextFieldWidget({
     required this.description,
@@ -17,6 +19,7 @@ class BaseTextFieldWidget extends StatelessWidget {
     this.onChanged,
     this.validator,
     this.readOnly = false,
+    this.inputFormatters,
     super.key,
   });
 
@@ -34,6 +37,7 @@ class BaseTextFieldWidget extends StatelessWidget {
             controller: controller,
             onChanged: onChanged,
             validator: validator,
+            inputFormatters: inputFormatters,
             readOnly: readOnly,
             decoration: InputDecoration(
               suffixIcon: suffixIcon,

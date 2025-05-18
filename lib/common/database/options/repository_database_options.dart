@@ -15,6 +15,7 @@ mixin RepositoryDatabaseOptions implements DatabaseOptionsBase {
       id: id,
       path: repository.path,
       passwordFile: repository.passwordFile,
+      snapshotInterval: repository.snapshotInterval,
       alias: repository.alias,
     );
   }
