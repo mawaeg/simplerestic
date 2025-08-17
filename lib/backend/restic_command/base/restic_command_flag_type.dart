@@ -2,4 +2,5 @@ enum ResticCommandFlagType {
   verbose,
   quiet,
   json,
+  delete,
 }
