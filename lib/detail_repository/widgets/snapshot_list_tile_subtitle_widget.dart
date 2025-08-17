@@ -4,7 +4,7 @@ import 'package:yaru/yaru.dart';
 import '../../backend/restic_types/primitives/snapshots/restic_snapshots_object_type.dart';
 import '../../common/models/repository_model.dart';
 import '../../common/models/snapshot_model.dart';
-import '../utils/date_time_to_string.dart';
+import '../../common/utils/date_time_to_string.dart';
 import '../utils/is_backup_needed.dart';
 
 class SnapshotListTileSubtitleWidget extends StatelessWidget {

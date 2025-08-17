@@ -4,9 +4,9 @@ import 'package:yaru/yaru.dart';
 import '../../backend/restic_types/primitives/snapshots/restic_snapshots_object_type.dart';
 import '../../common/models/repository_model.dart';
 import '../../common/models/snapshot_model.dart';
-import '../../common/widgets/simple_restic_yaru_option_button.dart';
-import '../../run_backup/views/run_backup_alert_dialog.dart';
-import 'edit_snapshot_alert_dialog.dart';
+import 'buttons/edit_snapshot_button_widget.dart';
+import 'buttons/run_backup_button_widget.dart';
+import 'buttons/snapshot_detail_button_widget.dart';
 import 'snapshot_list_tile_subtitle_widget.dart';
 
 class SnapshotListTileWidget extends StatelessWidget {
@@ -36,40 +36,23 @@ class SnapshotListTileWidget extends StatelessWidget {
         repository: repository,
         snapshot: snapshot,
       ),
-      // subtitle: snapshot?.alias != null
-      //     ? Text("$formattedPath\n$lastBackup")
-      //     : Text(lastBackup),
-      leading: SimpleResticYaruOptionButton(
-        onPressed: () async {
-          await showDialog(
-            context: context,
-            builder: (context) {
-              return RunBackupAlertDialog(
-                repository: repository,
-                path: formattedPath,
-              );
-            },
-          );
-        },
-        child: Icon(
-          YaruIcons.media_play,
-          color: Theme.of(context).primaryColor,
-        ),
+      leading: RunBackupButtonWidget(
+        repository: repository,
+        formattedPath: formattedPath,
       ),
-      trailing: SimpleResticYaruOptionButton(
-        onPressed: () async {
-          await showDialog(
-            context: context,
-            builder: (context) {
-              return EditSnapshotAlertDialog(
-                repository: repository,
-                snapshot: snapshot,
-                path: path,
-              );
-            },
-          );
-        },
-        child: const Icon(YaruIcons.settings),
+      trailing: Row(
+        children: [
+          SnapshotDetailButtonWidget(
+            formattedPath: formattedPath,
+            snapshot: snapshot,
+            snapshots: snapshots,
+          ),
+          EditSnapshotButtonWidget(
+            repository: repository,
+            path: path,
+            snapshot: snapshot,
+          ),
+        ],
       ),
     );
   }

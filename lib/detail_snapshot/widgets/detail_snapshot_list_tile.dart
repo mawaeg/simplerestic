@@ -1,0 +1,42 @@
+import 'package:flutter/material.dart';
+import 'package:proper_filesize/proper_filesize.dart';
+import 'package:yaru/yaru.dart';
+
+import '../../backend/restic_types/primitives/snapshots/restic_snapshots_object_type.dart';
+import '../../common/utils/date_time_to_string.dart';
+import 'snapshot_forget_button_widget.dart';
+import 'snapshot_mount_button_widget.dart';
+import 'snapshot_restore_button_widget.dart';
+
+class DetailSnapshotListTile extends StatelessWidget {
+  final ResticSnapshotsObjectType snapshotObject;
+
+  const DetailSnapshotListTile({
+    super.key,
+    required this.snapshotObject,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    String fileSize =
+        FileSize.fromBytes(snapshotObject.summary.totalBytesProcessed).toString(
+      decimals: 2,
+      unit: Unit.auto(
+          size: snapshotObject.summary.totalBytesProcessed,
+          baseType: BaseType.metric),
+    );
+    String id = snapshotObject.id.substring(0, 8);
+    String dateTime = dateTime2String(snapshotObject.time);
+    return YaruTile(
+      title: Text("$id: $dateTime"),
+      subtitle: Text("Host: ${snapshotObject.hostname} Size: $fileSize"),
+      trailing: Row(
+        children: [
+          SnapshotMountButtonWidget(),
+          SnapshotRestoreButtonWidget(),
+          SnapshotForgetButtonWidget(),
+        ],
+      ),
+    );
+  }
+}
