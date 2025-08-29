@@ -6,5 +6,5 @@ enum ResticCommandType {
   stats,
   cat,
   restore,
-  // mount,
+  mount,
 }

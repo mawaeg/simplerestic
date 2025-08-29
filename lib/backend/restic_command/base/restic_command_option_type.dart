@@ -6,6 +6,7 @@ enum ResticCommandOptionType {
   group_by,
   target,
   overwrite,
+  path,
   //TBD sort
 }
 

@@ -12,12 +12,17 @@ class ResticCommandExecutor {
 
   ResticCommandExecutor(this.command);
 
-  Future<List<ResticScriptingBaseType>> executeCommandAsync() async {
-    List<ResticScriptingBaseType> output = [];
+  static Future<Process> startCommandProcess(ResticCommand command) async {
     final process = await Process.start(
       "assets/restic_0.17.3_linux_amd64",
       command.build(),
     );
+    return process;
+  }
+
+  Future<List<ResticScriptingBaseType>> executeCommandAsync() async {
+    List<ResticScriptingBaseType> output = [];
+    final process = await startCommandProcess(command);
     await for (var data in process.stdout.transform(utf8.decoder)) {
       if (command.type == ResticCommandType.cat) {
         // Cat command does not ose JSON lines -> extra handling needed :/
@@ -50,10 +55,7 @@ class ResticCommandExecutor {
   }
 
   Stream<ResticScriptingBaseType> executeCommand() async* {
-    final process = await Process.start(
-      "assets/restic_0.17.3_linux_amd64",
-      command.build(),
-    );
+    final process = await startCommandProcess(command);
     await for (var data in process.stdout.transform(utf8.decoder)) {
       if (command.type == ResticCommandType.cat) {
         // Cat command does not ose JSON lines -> extra handling needed :/
