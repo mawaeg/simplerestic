@@ -5,7 +5,7 @@ import 'package:yaru/yaru.dart';
 import '../../common/cubits/repository_cubit.dart';
 import '../../common/models/repository_model.dart';
 import '../../create_repository/view/create_repository_alert_dialog.dart';
-import '../widgets/create_repository_widget.dart';
+import '../widgets/buttons/create_repository_button_widget.dart';
 import '../widgets/options_widget.dart';
 import '../widgets/repository_detail_page_widget.dart';
 import '../widgets/repository_list_yaru_master_tile.dart';
@@ -22,7 +22,7 @@ class HomeView extends StatelessWidget {
             appBar: YaruWindowTitleBar(
               title: Text("SimpleRestic"),
               backgroundColor: Colors.transparent,
-              leading: Center(child: CreateRepositoryWidget()),
+              leading: Center(child: CreateRepositoryButtonWidget()),
               actions: [OptionsWidget()],
             ),
             paneLayoutDelegate: YaruFixedPaneDelegate(paneSize: 450),
@@ -40,7 +40,7 @@ class HomeView extends StatelessWidget {
                 appBar: YaruWindowTitleBar(
                   title: Text("SimpleRestic"),
                   backgroundColor: Colors.transparent,
-                  leading: Center(child: CreateRepositoryWidget()),
+                  leading: Center(child: CreateRepositoryButtonWidget()),
                   actions: [OptionsWidget()],
                 ),
                 body: Center(

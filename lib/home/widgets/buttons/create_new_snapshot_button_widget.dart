@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:yaru/yaru.dart';
 
-import '../../common/models/repository_model.dart';
-import '../../common/widgets/simple_restic_yaru_option_button.dart';
-import '../../create_snapshot/views/create_snapshot_alert_dialog.dart';
+import '../../../common/models/repository_model.dart';
+import '../../../common/widgets/simple_restic_yaru_option_button.dart';
+import '../../../create_snapshot/views/create_snapshot_alert_dialog.dart';
 
-class CreateSnapshotWidget extends StatelessWidget {
+class CreateNewSnapshotButtonWidget extends StatelessWidget {
   final RepositoryModel repository;
 
-  const CreateSnapshotWidget({
+  const CreateNewSnapshotButtonWidget({
     super.key,
     required this.repository,
   });

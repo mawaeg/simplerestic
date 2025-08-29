@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yaru/yaru.dart';
 
 import '../../backend/restic_command/restic_command_backup.dart';
@@ -6,6 +7,7 @@ import '../../backend/restic_command_executor.dart';
 import '../../backend/restic_types/primitives/backup/restic_backup_error_type.dart';
 import '../../backend/restic_types/primitives/backup/restic_backup_summary_type.dart';
 import '../../backend/restic_types/restic_error_type.dart';
+import '../../common/cubits/snapshot_rebuild_cubit.dart';
 import '../../common/models/repository_model.dart';
 import '../widgets/run_backup_stream_builder_widget.dart';
 
@@ -29,8 +31,11 @@ class RunBackupAlertDialog extends StatelessWidget {
       title: YaruDialogTitleBar(
         title: Text("Performing backup"),
         // ToDo Add mechanism to properly abort backup
-        // ToDo Trigger update of snapshots for last backup indication
         isClosable: true,
+        onClose: (_) async {
+          context.read<SnapshotRebuildCubit>().toggle();
+          await Navigator.maybePop(context);
+        },
       ),
       content: SizedBox(
         height: 100,
