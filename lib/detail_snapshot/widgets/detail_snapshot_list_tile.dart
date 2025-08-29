@@ -5,7 +5,6 @@ import 'package:yaru/yaru.dart';
 import '../../backend/restic_types/primitives/snapshots/restic_snapshots_object_type.dart';
 import '../../common/utils/date_time_to_string.dart';
 import 'snapshot_forget_button_widget.dart';
-import 'snapshot_mount_button_widget.dart';
 import 'snapshot_restore_button_widget.dart';
 
 class DetailSnapshotListTile extends StatelessWidget {
@@ -32,7 +31,6 @@ class DetailSnapshotListTile extends StatelessWidget {
       subtitle: Text("Host: ${snapshotObject.hostname} Size: $fileSize"),
       trailing: Row(
         children: [
-          SnapshotMountButtonWidget(),
           SnapshotRestoreButtonWidget(),
           SnapshotForgetButtonWidget(),
         ],

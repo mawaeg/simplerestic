@@ -4,6 +4,7 @@ import 'package:yaru/yaru.dart';
 import '../../backend/restic_types/primitives/snapshots/restic_snapshots_object_type.dart';
 import '../../common/models/repository_model.dart';
 import '../../common/models/snapshot_model.dart';
+import '../../common/widgets/mount_button_widget.dart';
 import 'buttons/edit_snapshot_button_widget.dart';
 import 'buttons/run_backup_button_widget.dart';
 import 'buttons/snapshot_detail_button_widget.dart';
@@ -46,6 +47,11 @@ class SnapshotListTileWidget extends StatelessWidget {
             formattedPath: formattedPath,
             snapshot: snapshot,
             snapshots: snapshots,
+          ),
+          MountButtonWidget(
+            repository: repository.path,
+            passwordFile: repository.passwordFile,
+            path: path.join(" "),
           ),
           EditSnapshotButtonWidget(
             repository: repository,
