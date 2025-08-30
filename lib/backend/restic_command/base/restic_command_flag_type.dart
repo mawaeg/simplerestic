@@ -3,4 +3,5 @@ enum ResticCommandFlagType {
   quiet,
   json,
   delete,
+  prune,
 }

@@ -7,4 +7,5 @@ enum ResticCommandType {
   cat,
   restore,
   mount,
+  forget,
 }
