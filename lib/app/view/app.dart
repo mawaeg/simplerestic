@@ -5,7 +5,9 @@ import 'package:yaru/yaru.dart';
 import '../../common/cubits/repository_cubit.dart';
 import '../../common/cubits/snapshot_cubit.dart';
 import '../../common/cubits/snapshot_rebuild_cubit.dart';
+import '../../common/cubits/snapshots_list_cubit.dart';
 import '../../create_repository/cubits/create_repository_cubit.dart';
+import '../../detail_snapshot/cubits/prune_data_button_cubit.dart';
 import '../../home/view/home_view.dart';
 
 class SimpleResticApp extends StatelessWidget {
@@ -21,6 +23,8 @@ class SimpleResticApp extends StatelessWidget {
             BlocProvider(create: (_) => SnapshotCubit()..init()),
             BlocProvider(create: (_) => CreateRepositoryCubit()),
             BlocProvider(create: (_) => SnapshotRebuildCubit()),
+            BlocProvider(create: (_) => PruneDataButtonCubit()),
+            BlocProvider(create: (_) => SnapshotsListCubit()),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

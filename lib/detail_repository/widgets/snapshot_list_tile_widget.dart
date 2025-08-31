@@ -44,6 +44,7 @@ class SnapshotListTileWidget extends StatelessWidget {
       trailing: Row(
         children: [
           SnapshotDetailButtonWidget(
+            repository: repository,
             formattedPath: formattedPath,
             snapshot: snapshot,
             snapshots: snapshots,
