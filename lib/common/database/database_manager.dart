@@ -8,14 +8,21 @@ import 'options/snapshot_database_options.dart';
 
 /// This class bundles all DatabaseOption mixins to one point.
 class DatabaseManager with RepositoryDatabaseOptions, SnapshotDatabaseOptions {
+
+  Future<String> getDBPathAndCreateFileIfNotExists() async{
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    File datbaseFile = await File(join(appDocDir.path, "simplerestic/db/database.db")).create(recursive: true);
+
+    return datbaseFile.path;
+  }
+
   /// Initializes the database.
   @override
   Future<Database> init() async {
     sqfliteFfiInit();
-    Directory dir = await getApplicationDocumentsDirectory();
+    String path = await getDBPathAndCreateFileIfNotExists();
     var databaseFactory = databaseFactoryFfi;
-    Database database = await databaseFactory
-        .openDatabase(join(dir.path, 'simplerestic/db/database.db'));
+    Database database = await databaseFactory.openDatabase(path);
 
     // Enable FOREIGN KEYs
     await database.execute("PRAGMA foreign_keys = ON");

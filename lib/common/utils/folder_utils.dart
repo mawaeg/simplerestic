@@ -16,9 +16,7 @@ Future<String> getMountPointPath(String folder, {bool create = false}) async {
   String mountPointPath = join(dir.path, folder);
 
   if (create) {
-    if (!await Directory(mountPointPath).exists()) {
-      await Directory(mountPointPath).create();
-    }
+    await Directory(mountPointPath).create();
   }
 
   return mountPointPath;

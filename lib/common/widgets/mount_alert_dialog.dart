@@ -23,7 +23,7 @@ class MountAlertDialog extends StatelessWidget {
   });
 
   Future<Process> mountProcess() async {
-    String absMountPointPath = await getMountPointPath(mountPointPath);
+    String absMountPointPath = await getMountPointPath(mountPointPath, create: true);
     ResticCommand command = ResticCommandMount(
       repository: repository,
       passwordFile: passwordFile,
