@@ -1,0 +1,32 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../backend/restic_command/base/restic_command_option_type.dart';
+import '../models/restore_snapshot_model.dart';
+
+class RestoreSnapshotCubit extends Cubit<RestoreSnapshotModel> {
+  RestoreSnapshotCubit() : super(RestoreSnapshotModel());
+
+  void setTarget(String target) {
+    state.target = target;
+    emit(state);
+  }
+
+  void setOverwriteStrategy(ResticOverwriteOptionTypeValues overwriteStrategy) {
+    state.overwriteStrategy = overwriteStrategy;
+    emit(state);
+  }
+
+  void setDelete(bool delete) {
+    emit(
+      RestoreSnapshotModel(
+        target: state.target,
+        overwriteStrategy: state.overwriteStrategy,
+        delete: delete,
+      ),
+    );
+  }
+
+  void clearData() {
+    emit(RestoreSnapshotModel());
+  }
+}

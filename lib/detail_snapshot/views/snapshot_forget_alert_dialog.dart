@@ -7,6 +7,7 @@ import '../../backend/restic_command_executor.dart';
 import '../../common/cubits/snapshots_list_cubit.dart';
 import '../../common/models/repository_model.dart';
 import '../cubits/prune_data_button_cubit.dart';
+import '../../common/utils/shortened_id.dart';
 
 class SnapshotForgetAlertDialog extends StatelessWidget {
   final RepositoryModel repository;
@@ -20,10 +21,11 @@ class SnapshotForgetAlertDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String shortenedId = getShortenedId(id);
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       title: YaruDialogTitleBar(
-        title: Text("Forget $id"),
+        title: Text("Forget $shortenedId"),
         isClosable: true,
       ),
       content: SizedBox(
@@ -60,7 +62,7 @@ class SnapshotForgetAlertDialog extends StatelessWidget {
                       await Navigator.maybePop(context);
                     }
                   },
-                  child: Text("Forget snapshot ${id.substring(0, 8)}"),
+                  child: Text("Forget snapshot $shortenedId"),
                 ),
               ],
             );

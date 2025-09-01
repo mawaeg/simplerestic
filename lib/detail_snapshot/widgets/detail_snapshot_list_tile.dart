@@ -5,6 +5,7 @@ import 'package:yaru/yaru.dart';
 import '../../backend/restic_types/primitives/snapshots/restic_snapshots_object_type.dart';
 import '../../common/models/repository_model.dart';
 import '../../common/utils/date_time_to_string.dart';
+import '../../common/utils/shortened_id.dart';
 import 'snapshot_forget_button_widget.dart';
 import 'snapshot_restore_button_widget.dart';
 
@@ -27,14 +28,17 @@ class DetailSnapshotListTile extends StatelessWidget {
           size: snapshotObject.summary.totalBytesProcessed,
           baseType: BaseType.metric),
     );
-    String id = snapshotObject.id.substring(0, 8);
+    String id = getShortenedId(snapshotObject.id);
     String dateTime = dateTime2String(snapshotObject.time.toLocal());
     return YaruTile(
       title: Text("$id: $dateTime"),
       subtitle: Text("Host: ${snapshotObject.hostname} Size: $fileSize"),
       trailing: Row(
         children: [
-          SnapshotRestoreButtonWidget(),
+          SnapshotRestoreButtonWidget(
+            repository: repository,
+            id: snapshotObject.id,
+          ),
           SnapshotForgetButtonWidget(
             repository: repository,
             id: snapshotObject.id,

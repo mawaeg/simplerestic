@@ -1,89 +1,49 @@
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yaru/yaru.dart';
 
 import '../../common/cubits/repository_cubit.dart';
 import '../../common/models/repository_model.dart';
+import '../../common/widgets/path_text_field_base_widget.dart';
 import '../cubits/create_repository_cubit.dart';
-import 'base_text_field_widget.dart';
 
-class PathTextFieldWidget extends StatefulWidget {
+class PathTextFieldWidget extends StatelessWidget {
   final bool readOnly;
   final String? initialValue;
+
   const PathTextFieldWidget({
     super.key,
-    this.readOnly = false,
+    required this.readOnly,
     this.initialValue,
   });
 
   @override
-  State<PathTextFieldWidget> createState() => _PathTextFieldWidgetState();
-}
-
-class _PathTextFieldWidgetState extends State<PathTextFieldWidget> {
-  late TextEditingController _pathController;
-
-  @override
-  void initState() {
-    super.initState();
-    _pathController = TextEditingController(text: widget.initialValue);
-    if (widget.initialValue != null) {
-      context.read<CreateRepositoryCubit>().setPath(widget.initialValue);
-    }
-  }
-
-  @override
-  void dispose() {
-    _pathController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    void setPath(String path) {
-      if (context.mounted) {
-        context.read<CreateRepositoryCubit>().setPath(path);
-      }
-    }
-
     return BlocBuilder<RepositoryCubit, List<RepositoryModel>>(
-        builder: (context, state) {
-      return BaseTextFieldWidget(
-        description: "The path to the repository you want to create / import.",
-        hintText: "Path",
-        controller: _pathController,
-        suffixIcon: YaruIconButton(
-          onPressed: () async {
-            String? selectedDirectory =
-                await FilePicker.platform.getDirectoryPath();
-            if (selectedDirectory != null) {
-              setState(() {
-                _pathController.text = selectedDirectory;
-              });
-              setPath(selectedDirectory);
+      builder: (context, state) {
+        return PathTextFieldBaseWidget(
+          description:
+              "The path to the repository you want to create / import.",
+          hintText: "Path",
+          required: true,
+          readOnly: readOnly,
+          initialValue: initialValue,
+          onValueChangedHook: context.read<CreateRepositoryCubit>().setPath,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return "Path is required.";
             }
+            if (state.any((element) => element.path == value) && !readOnly) {
+              return "Repository can only be added once.";
+            }
+            if (!Directory(value).existsSync()) {
+              return "The path to the folder must be valid.";
+            }
+            return null;
           },
-          icon: Icon(YaruIcons.folder),
-        ),
-        onChanged: setPath,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return "Path is required.";
-          }
-          if (state.any((element) => element.path == value) &&
-              !widget.readOnly) {
-            return "Repository can only be added once.";
-          }
-          if (!Directory(value).existsSync()) {
-            return "The path to the folder must be valid.";
-          }
-          return null;
-        },
-        readOnly: widget.readOnly,
-      );
-    });
+        );
+      },
+    );
   }
 }

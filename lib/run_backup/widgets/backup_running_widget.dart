@@ -24,7 +24,7 @@ class BackupRunningWidget extends StatelessWidget {
             children: [
               Text("Seconds elapsed: ${status.secondsElapsed}s"),
               Text("Seconds remaining: ${status.secondsRemaining ?? '?'}s"),
-              Text("${status.filesDone}/${status.totalFiles} files done.")
+              Text("${status.filesDone}/${status.totalFiles} files done."),
             ],
           ),
         ),
