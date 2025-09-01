@@ -6,7 +6,7 @@ class ResticRestoreStatusType extends ResticJsonType {
   final double percentDone;
   final int totalFiles;
   final int? filesRestored;
-  final int filesSkipped;
+  final int? filesSkipped;
   final int? filesDeleted;
   final int? totalBytes;
   final int? bytesRestored;

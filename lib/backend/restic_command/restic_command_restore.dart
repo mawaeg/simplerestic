@@ -39,7 +39,7 @@ class ResticCommandRestore extends ResticCommandCli {
           options: [
             ResticCommandOption(ResticCommandOptionType.target, target),
             ResticCommandOption(ResticCommandOptionType.overwrite,
-                normalizeCommandEnum(overwriteStrategy.name))
+                normalizeCommandEnum(overwriteStrategy.name, isOption: false))
           ],
           flags: delete ? [ResticCommandFlagType.delete] : null,
         );
