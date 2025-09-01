@@ -1,14 +1,14 @@
 import '../../base/restic_json_type.dart';
 
 /// Represents the json output for the backup command of message_type `error`.
-class ResticBackupErrorType extends ResticJsonType {
+class ResticBaseErrorType extends ResticJsonType {
   final String errorMessage;
   final String during;
   final String item;
 
-  ResticBackupErrorType(this.errorMessage, this.during, this.item);
+  ResticBaseErrorType(this.errorMessage, this.during, this.item);
 
-  factory ResticBackupErrorType.fromJson(dynamic json) => ResticBackupErrorType(
+  factory ResticBaseErrorType.fromJson(dynamic json) => ResticBaseErrorType(
         json["error_message"],
         json["during"],
         json["item"],

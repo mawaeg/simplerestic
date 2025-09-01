@@ -4,7 +4,7 @@ import 'package:yaru/yaru.dart';
 
 import '../../backend/restic_command/restic_command_backup.dart';
 import '../../backend/restic_command_executor.dart';
-import '../../backend/restic_types/primitives/backup/restic_backup_error_type.dart';
+import '../../backend/restic_types/primitives/base/restic_base_error_type.dart';
 import '../../backend/restic_types/primitives/backup/restic_backup_summary_type.dart';
 import '../../backend/restic_types/restic_error_type.dart';
 import '../../common/cubits/snapshot_rebuild_cubit.dart';
@@ -25,7 +25,7 @@ class RunBackupAlertDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     ResticBackupSummaryType? summary;
     ResticErrorType? errorType;
-    ResticBackupErrorType? backupErrorType;
+    ResticBaseErrorType? backupErrorType;
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       title: YaruDialogTitleBar(
@@ -53,8 +53,8 @@ class RunBackupAlertDialog extends StatelessWidget {
               if (snapshot.data is ResticBackupSummaryType) {
                 summary = snapshot.data as ResticBackupSummaryType;
               }
-              if (snapshot.data is ResticBackupErrorType) {
-                backupErrorType = snapshot.data as ResticBackupErrorType;
+              if (snapshot.data is ResticBaseErrorType) {
+                backupErrorType = snapshot.data as ResticBaseErrorType;
               }
               if (snapshot.data is ResticErrorType) {
                 errorType = snapshot.data as ResticErrorType;

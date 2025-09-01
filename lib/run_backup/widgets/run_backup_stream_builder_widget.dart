@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yaru/yaru.dart';
 
 import '../../backend/restic_types/base/restic_scripting_base_type.dart';
-import '../../backend/restic_types/primitives/backup/restic_backup_error_type.dart';
+import '../../backend/restic_types/primitives/base/restic_base_error_type.dart';
 import '../../backend/restic_types/primitives/backup/restic_backup_status_type.dart';
 import '../../backend/restic_types/primitives/backup/restic_backup_summary_type.dart';
 import '../../backend/restic_types/restic_error_type.dart';
@@ -17,7 +17,7 @@ class RunBackupStreamBuilderWidget extends StatelessWidget {
 
   final ResticBackupSummaryType? summary;
   final ResticErrorType? errorType;
-  final ResticBackupErrorType? backupErrorType;
+  final ResticBaseErrorType? backupErrorType;
 
   const RunBackupStreamBuilderWidget({
     super.key,

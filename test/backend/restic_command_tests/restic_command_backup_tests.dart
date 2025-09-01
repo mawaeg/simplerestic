@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:simplerestic/backend/restic_command/restic_command_backup.dart';
-import 'package:simplerestic/backend/restic_types/primitives/backup/restic_backup_error_type.dart';
+import 'package:simplerestic/backend/restic_types/primitives/base/restic_base_error_type.dart';
 import 'package:simplerestic/backend/restic_types/primitives/backup/restic_backup_status_type.dart';
 import 'package:simplerestic/backend/restic_types/primitives/backup/restic_backup_summary_type.dart';
 
@@ -88,7 +88,7 @@ void main() {
       };
       expect(
         resticCommand.parseJson(errorJson),
-        ResticBackupErrorType("testErrorMessage", "testDuring", "testItem"),
+        ResticBaseErrorType("testErrorMessage", "testDuring", "testItem"),
       );
 
       Map<String, dynamic> invalidJson = {"message_type": "not_initialized"};

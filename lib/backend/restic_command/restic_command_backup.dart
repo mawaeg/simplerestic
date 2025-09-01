@@ -1,5 +1,5 @@
 import '../restic_types/base/restic_json_type.dart';
-import '../restic_types/primitives/backup/restic_backup_error_type.dart';
+import '../restic_types/primitives/base/restic_base_error_type.dart';
 import '../restic_types/primitives/backup/restic_backup_status_type.dart';
 import '../restic_types/primitives/backup/restic_backup_summary_type.dart';
 import 'base/restic_command_cli.dart';
@@ -22,7 +22,7 @@ class ResticCommandBackup extends ResticCommandCli {
       case "summary":
         return ResticBackupSummaryType.fromJson(json);
       case "error":
-        return ResticBackupErrorType.fromJson(json);
+        return ResticBaseErrorType.fromJson(json);
       default:
         return null;
     }
