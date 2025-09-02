@@ -24,7 +24,7 @@ void main() {
         "testPath"
       ]);
     });
-    test("Ensure ResticCommandInit correctly parses Json", () {
+    test("Ensure ResticCommandBackup correctly parses Json", () {
       Map<String, dynamic> statusJson = {
         "message_type": "status",
         "seconds_elapsed": 1,
