@@ -5,11 +5,13 @@ class RestoreSnapshotModel {
   ResticOverwriteOptionTypeValues overwriteStrategy;
   bool delete = false;
   bool inplaceRestore = false;
+  bool warningsAccepted = false;
 
   RestoreSnapshotModel({
     this.target,
     this.overwriteStrategy = ResticOverwriteOptionTypeValues.always,
     this.delete = false,
     this.inplaceRestore = false,
+    this.warningsAccepted = false,
   });
 }

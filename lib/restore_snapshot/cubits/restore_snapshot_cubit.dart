@@ -23,6 +23,7 @@ class RestoreSnapshotCubit extends Cubit<RestoreSnapshotModel> {
         overwriteStrategy: state.overwriteStrategy,
         delete: delete,
         inplaceRestore: state.inplaceRestore,
+        warningsAccepted: state.warningsAccepted,
       ),
     );
   }
@@ -34,8 +35,19 @@ class RestoreSnapshotCubit extends Cubit<RestoreSnapshotModel> {
         overwriteStrategy: state.overwriteStrategy,
         delete: state.delete,
         inplaceRestore: inplaceRestore,
+        warningsAccepted: state.warningsAccepted,
       ),
     );
+  }
+
+  void setWarningsAccepted(bool warningsAccepted) {
+    emit(RestoreSnapshotModel(
+      target: state.target,
+      overwriteStrategy: state.overwriteStrategy,
+      delete: state.delete,
+      inplaceRestore: state.inplaceRestore,
+      warningsAccepted: warningsAccepted,
+    ));
   }
 
   void clearData() {
