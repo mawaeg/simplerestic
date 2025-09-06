@@ -2,22 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yaru/yaru.dart';
 
+import '../../backend/restic_types/primitives/snapshots/restic_snapshots_object_type.dart';
 import '../../common/models/repository_model.dart';
 import '../cubits/restore_snapshot_cubit.dart';
 import '../../common/utils/shortened_id.dart';
 import '../widgets/snapshot_restore_delete_checkbox_widget.dart';
+import '../widgets/snapshot_restore_inplace_checkbox_widget.dart';
 import '../widgets/snapshot_restore_overwrite_strategy_widget.dart';
 import '../widgets/snapshot_restore_path_text_field_widget.dart';
 import '../widgets/snapshot_restore_start_button_widget.dart';
 
 class SnapshotRestoreAlertDialog extends StatelessWidget {
   final RepositoryModel repository;
-  final String id;
+  final ResticSnapshotsObjectType snapshotObject;
 
   const SnapshotRestoreAlertDialog({
     super.key,
     required this.repository,
-    required this.id,
+    required this.snapshotObject,
   });
 
   @override
@@ -27,7 +29,7 @@ class SnapshotRestoreAlertDialog extends StatelessWidget {
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       title: YaruDialogTitleBar(
-        title: Text("Restore ${getShortenedId(id)}"),
+        title: Text("Restore ${getShortenedId(snapshotObject.id)}"),
         isClosable: true,
         onClose: (p0) async {
           context.read<RestoreSnapshotCubit>().clearData();
@@ -35,7 +37,7 @@ class SnapshotRestoreAlertDialog extends StatelessWidget {
         },
       ),
       content: SizedBox(
-        height: 252,
+        height: 334,
         width: 400,
         child: Form(
           key: formKey,
@@ -45,9 +47,12 @@ class SnapshotRestoreAlertDialog extends StatelessWidget {
               SnapshotRestorePathTextFieldWidget(),
               SnapshotRestoreOverwriteStrategyWidget(),
               SnapshotRestoreDeleteCheckboxWidget(),
+              SnapshotRestoreInplaceCheckboxWidget(
+                snapshotObject: snapshotObject,
+              ),
               SnapshotRestoreStartButtonWidget(
                 formKey: formKey,
-                id: id,
+                snapshotObject: snapshotObject,
                 repository: repository,
               ),
             ],

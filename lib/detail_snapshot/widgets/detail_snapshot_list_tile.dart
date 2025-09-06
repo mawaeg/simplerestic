@@ -37,7 +37,7 @@ class DetailSnapshotListTile extends StatelessWidget {
         children: [
           SnapshotRestoreButtonWidget(
             repository: repository,
-            id: snapshotObject.id,
+            snapshotObject: snapshotObject,
           ),
           SnapshotForgetButtonWidget(
             repository: repository,

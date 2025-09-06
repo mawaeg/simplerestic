@@ -6,6 +6,7 @@ import '../../backend/restic_command_executor.dart';
 import '../../backend/restic_types/primitives/base/restic_base_error_type.dart';
 import '../../backend/restic_types/primitives/restore/restic_restore_status_type.dart';
 import '../../backend/restic_types/primitives/restore/restic_restore_summary_type.dart';
+import '../../backend/restic_types/primitives/snapshots/restic_snapshots_object_type.dart';
 import '../../backend/restic_types/restic_return_type.dart';
 import '../../common/utils/shortened_id.dart';
 import '../widgets/snapshot_restore_failed_widget.dart';
@@ -13,12 +14,12 @@ import '../widgets/snapshot_restore_running_widget.dart';
 import '../widgets/snapshot_restore_summary_widget.dart';
 
 class SnapshotRestoreStatusAlertDialog extends StatelessWidget {
-  final String id;
+  final ResticSnapshotsObjectType snapshotObject;
   final ResticCommandRestore command;
 
   const SnapshotRestoreStatusAlertDialog({
     super.key,
-    required this.id,
+    required this.snapshotObject,
     required this.command,
   });
 
@@ -30,7 +31,7 @@ class SnapshotRestoreStatusAlertDialog extends StatelessWidget {
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       title: YaruDialogTitleBar(
-        title: Text("Restore ${getShortenedId(id)}"),
+        title: Text("Restore ${getShortenedId(snapshotObject.id)}"),
         isClosable: true,
       ),
       content: SizedBox(
@@ -58,6 +59,7 @@ class SnapshotRestoreStatusAlertDialog extends StatelessWidget {
                 summary: summary!,
                 returnType: snapshot.data as ResticReturnType,
                 command: command,
+                snapshotObject: snapshotObject,
               );
             } else if (snapshot.data is ResticReturnType) {
               return Text(

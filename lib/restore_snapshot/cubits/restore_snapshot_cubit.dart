@@ -22,6 +22,18 @@ class RestoreSnapshotCubit extends Cubit<RestoreSnapshotModel> {
         target: state.target,
         overwriteStrategy: state.overwriteStrategy,
         delete: delete,
+        inplaceRestore: state.inplaceRestore,
+      ),
+    );
+  }
+
+  void setInplaceRestore(bool inplaceRestore) {
+    emit(
+      RestoreSnapshotModel(
+        target: state.target,
+        overwriteStrategy: state.overwriteStrategy,
+        delete: state.delete,
+        inplaceRestore: inplaceRestore,
       ),
     );
   }
