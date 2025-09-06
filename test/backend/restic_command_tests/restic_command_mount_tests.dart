@@ -2,7 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:simplerestic/backend/restic_command/restic_command_mount.dart';
 
 void main() {
-  //ToDo also test with path
   ResticCommandMount resticCommand = ResticCommandMount(
     repository: "testRepo",
     passwordFile: "testPassword",

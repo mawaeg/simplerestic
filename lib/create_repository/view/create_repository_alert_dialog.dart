@@ -10,32 +10,23 @@ import '../widgets/password_text_field_widget.dart';
 import '../widgets/path_text_field_widget.dart';
 import '../widgets/repository_interval_select_text_field_widget.dart';
 
-//ToDo make StatelessWidget (working in create snapshot)
-class CreateRepositoryAlertDialog extends StatefulWidget {
+class CreateRepositoryAlertDialog extends StatelessWidget {
   final bool create;
   final RepositoryModel? repository;
-  const CreateRepositoryAlertDialog({
+  final _formKey = GlobalKey<FormState>();
+
+  CreateRepositoryAlertDialog({
     super.key,
     this.create = true,
     this.repository,
   }) : assert(create || repository != null);
 
   @override
-  State<CreateRepositoryAlertDialog> createState() =>
-      _CreateRepositoryAlertDialogState();
-}
-
-class _CreateRepositoryAlertDialogState
-    extends State<CreateRepositoryAlertDialog> {
-  final _formKey = GlobalKey<FormState>();
-
-  @override
   Widget build(BuildContext context) {
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       title: YaruDialogTitleBar(
-        title:
-            Text(widget.create ? "Add a new repository" : "Update repository"),
+        title: Text(create ? "Add a new repository" : "Update repository"),
         isClosable: true,
         onClose: (context) {
           context.read<CreateRepositoryCubit>().clear();
@@ -51,24 +42,22 @@ class _CreateRepositoryAlertDialogState
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               PathTextFieldWidget(
-                readOnly: !widget.create,
-                initialValue: !widget.create ? widget.repository!.path : null,
+                readOnly: !create,
+                initialValue: !create ? repository!.path : null,
               ),
               PasswordTextFieldWidget(
-                initialValue:
-                    !widget.create ? widget.repository!.passwordFile : null,
+                initialValue: !create ? repository!.passwordFile : null,
               ),
               AliasTextFieldWidget(
-                initialValue: !widget.create ? widget.repository!.alias : null,
+                initialValue: !create ? repository!.alias : null,
               ),
               RepositoryIntervalSelectTextFieldWidget(
-                initialInterval:
-                    !widget.create ? widget.repository!.snapshotInterval : null,
+                initialInterval: !create ? repository!.snapshotInterval : null,
               ),
               CreateRepositoryButtonWidget(
                 formKey: _formKey,
-                create: widget.create,
-                repository: widget.repository,
+                create: create,
+                repository: repository,
               ),
             ],
           ),

@@ -1,12 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:simplerestic/backend/restic_command/restic_command_restore.dart';
-import 'package:simplerestic/backend/restic_types/base/restic_json_type.dart';
 import 'package:simplerestic/backend/restic_types/primitives/base/restic_base_error_type.dart';
 import 'package:simplerestic/backend/restic_types/primitives/restore/restic_restore_status_type.dart';
 import 'package:simplerestic/backend/restic_types/primitives/restore/restic_restore_summary_type.dart';
 
 void main() {
-  //ToDo also test with path
   ResticCommandRestore resticCommand = ResticCommandRestore(
     repository: "testRepo",
     passwordFile: "testPassword",
