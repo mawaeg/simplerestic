@@ -7,6 +7,7 @@ import '../../backend/restic_command/base/restic_command.dart';
 import '../../backend/restic_command/restic_command_mount.dart';
 import '../../backend/restic_command_executor.dart';
 import '../utils/folder_utils.dart';
+import 'open_folder_button_widget.dart';
 
 const mountPointPath = "simplerestic/mountpoint";
 
@@ -23,7 +24,8 @@ class MountAlertDialog extends StatelessWidget {
   });
 
   Future<Process> mountProcess() async {
-    String absMountPointPath = await getMountPointPath(mountPointPath, create: true);
+    String absMountPointPath =
+        await getMountPointPath(mountPointPath, create: true);
     ResticCommand command = ResticCommandMount(
       repository: repository,
       passwordFile: passwordFile,
@@ -61,15 +63,9 @@ class MountAlertDialog extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                    ),
-                    onPressed: () async {
-                      String path = await getMountPointPath(mountPointPath);
-                      await openFolder(path);
-                    },
-                    child: Text("Open folder"),
+                  OpenFolderButtonWidget(
+                    path: mountPointPath,
+                    asyncPathModifierHook: getMountPointPath,
                   ),
                   OutlinedButton(
                     onPressed: () {

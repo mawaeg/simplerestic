@@ -35,7 +35,7 @@ class SnapshotRestoreStatusAlertDialog extends StatelessWidget {
       ),
       content: SizedBox(
         width: 350,
-        height: 100,
+        height: 116,
         child: StreamBuilder(
           stream: ResticCommandExecutor(command).executeCommand(),
           builder: (context, snapshot) {
@@ -55,8 +55,10 @@ class SnapshotRestoreStatusAlertDialog extends StatelessWidget {
               );
             } else if (snapshot.data is ResticReturnType && summary != null) {
               return SnapshotRestoreSummaryWidget(
-                  summary: summary!,
-                  returnType: snapshot.data as ResticReturnType);
+                summary: summary!,
+                returnType: snapshot.data as ResticReturnType,
+                command: command,
+              );
             } else if (snapshot.data is ResticReturnType) {
               return Text(
                   "Restoring finished with exit code ${(snapshot.data as ResticReturnType).exitCode}.");
