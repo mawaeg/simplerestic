@@ -4,28 +4,27 @@ import 'package:yaru/yaru.dart';
 
 import '../../backend/restic_command/restic_command_forget.dart';
 import '../../backend/restic_command_executor.dart';
+import '../../backend/restic_types/primitives/snapshots/restic_snapshots_object_type.dart';
 import '../../common/cubits/snapshots_list_cubit.dart';
 import '../../common/models/repository_model.dart';
 import '../cubits/prune_data_button_cubit.dart';
-import '../../common/utils/shortened_id.dart';
 
 class SnapshotForgetAlertDialog extends StatelessWidget {
   final RepositoryModel repository;
-  final String id;
+  final ResticSnapshotsObjectType snapshot;
 
   const SnapshotForgetAlertDialog({
     super.key,
     required this.repository,
-    required this.id,
+    required this.snapshot,
   });
 
   @override
   Widget build(BuildContext context) {
-    final String shortenedId = getShortenedId(id);
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       title: YaruDialogTitleBar(
-        title: Text("Forget $shortenedId"),
+        title: Text("Forget ${snapshot.shortId}"),
         isClosable: true,
       ),
       content: SizedBox(
@@ -54,15 +53,17 @@ class SnapshotForgetAlertDialog extends StatelessWidget {
                       ResticCommandForget(
                         repository: repository.path,
                         passwordFile: repository.passwordFile,
-                        snapshotId: id,
+                        snapshotId: snapshot.id,
                       ),
                     ).executeCommandAsync();
                     if (context.mounted) {
-                      context.read<SnapshotsListCubit>().removeSnapshot(id);
+                      context
+                          .read<SnapshotsListCubit>()
+                          .removeSnapshot(snapshot.id);
                       await Navigator.maybePop(context);
                     }
                   },
-                  child: Text("Forget snapshot $shortenedId"),
+                  child: Text("Forget snapshot ${snapshot.shortId}"),
                 ),
               ],
             );

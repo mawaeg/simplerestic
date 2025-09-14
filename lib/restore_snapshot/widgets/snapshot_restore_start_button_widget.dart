@@ -7,7 +7,6 @@ import '../../backend/restic_command/base/restic_command_option_type.dart';
 import '../../backend/restic_command/restic_command_restore.dart';
 import '../../backend/restic_types/primitives/snapshots/restic_snapshots_object_type.dart';
 import '../../common/models/repository_model.dart';
-import '../../common/utils/shortened_id.dart';
 import '../cubits/restore_snapshot_cubit.dart';
 import '../models/restore_snapshot_model.dart';
 import '../views/snapshot_restore_base_accept_dialog.dart';
@@ -57,7 +56,7 @@ class SnapshotRestoreStartButtonWidget extends StatelessWidget {
               });
             }
           },
-          child: Text("Restore snapshot ${getShortenedId(snapshotObject.id)}"),
+          child: Text("Restore snapshot ${snapshotObject.shortId}"),
         );
       },
     );

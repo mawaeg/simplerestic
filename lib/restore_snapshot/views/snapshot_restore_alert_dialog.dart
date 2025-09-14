@@ -5,7 +5,6 @@ import 'package:yaru/yaru.dart';
 import '../../backend/restic_types/primitives/snapshots/restic_snapshots_object_type.dart';
 import '../../common/models/repository_model.dart';
 import '../cubits/restore_snapshot_cubit.dart';
-import '../../common/utils/shortened_id.dart';
 import '../widgets/snapshot_restore_delete_checkbox_widget.dart';
 import '../widgets/snapshot_restore_inplace_checkbox_widget.dart';
 import '../widgets/snapshot_restore_overwrite_strategy_widget.dart';
@@ -29,7 +28,7 @@ class SnapshotRestoreAlertDialog extends StatelessWidget {
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       title: YaruDialogTitleBar(
-        title: Text("Restore ${getShortenedId(snapshotObject.id)}"),
+        title: Text("Restore ${snapshotObject.shortId}"),
         isClosable: true,
         onClose: (p0) async {
           context.read<RestoreSnapshotCubit>().clearData();

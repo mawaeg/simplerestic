@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yaru/yaru.dart';
 
 import '../../backend/restic_types/primitives/snapshots/restic_snapshots_object_type.dart';
-import '../../common/utils/shortened_id.dart';
 import '../cubits/restore_snapshot_cubit.dart';
 
 class SnapshotRestoreBaseAcceptDialog extends StatelessWidget {
@@ -20,7 +19,7 @@ class SnapshotRestoreBaseAcceptDialog extends StatelessWidget {
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       title: YaruDialogTitleBar(
-        title: Text("Restore ${getShortenedId(snapshotObject.id)}"),
+        title: Text("Restore ${snapshotObject.shortId}"),
         isClosable: true,
         onClose: (p0) async {
           await Navigator.maybePop(context);
