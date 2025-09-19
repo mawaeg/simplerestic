@@ -14,7 +14,13 @@ def find_cov_files(path):
         content = file.read()
 
     return re.findall(r"(?<=SF:)(.+)", content)
-    
+
+def is_file_ignored(path):
+    with open(path, "r") as file:
+        content = file.read()
+
+    return re.search(r"//\s*coverage:\s*ignore-file", content) is not None
+
 
 if __name__ == "__main__":
     cwd = os.path.abspath(os.getcwd())
@@ -29,7 +35,8 @@ if __name__ == "__main__":
 
     with open("coverage/lcov.info", "a") as file:
         for uncovered_file in project_files:
-            file.write(f"SF:{uncovered_file}\nDA:1,0\nend_of_record\n")
+            if not is_file_ignored(uncovered_file):
+                file.write(f"SF:{uncovered_file}\nDA:1,0\nend_of_record\n")
 
     subprocess.run(["genhtml", "coverage/lcov.info", "-o", "coverage/html"], cwd=cwd)
     subprocess.run(["open", "coverage/html/index.html"], cwd=cwd)
