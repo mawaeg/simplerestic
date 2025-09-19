@@ -40,11 +40,13 @@ class RunBackupAlertDialog extends StatelessWidget {
       content: SizedBox(
         height: 100,
         child: StreamBuilder(
-            stream: ResticCommandExecutor(ResticCommandBackup(
-                    repository: repository.path,
-                    passwordFile: repository.passwordFile,
-                    path: path))
-                .executeCommand(),
+            stream: ResticCommandExecutor().executeCommand(
+              ResticCommandBackup(
+                repository: repository.path,
+                passwordFile: repository.passwordFile,
+                path: path,
+              ),
+            ),
             builder: (context, snapshot) {
               // If no data is provided show blank widget
               if (!snapshot.hasData) return Center();

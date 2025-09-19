@@ -25,14 +25,14 @@ class MountAlertDialog extends StatelessWidget {
 
   Future<Process> mountProcess() async {
     String absMountPointPath =
-        await getMountPointPath(mountPointPath, create: true);
+        await FolderUtils().getMountPointPath(mountPointPath, create: true);
     ResticCommand command = ResticCommandMount(
       repository: repository,
       passwordFile: passwordFile,
       mountPoint: absMountPointPath,
       path: path,
     );
-    final process = await ResticCommandExecutor.startCommandProcess(command);
+    final process = await ResticCommandExecutor().startCommandProcess(command);
     return process;
   }
 
@@ -65,7 +65,7 @@ class MountAlertDialog extends StatelessWidget {
                 children: [
                   OpenFolderButtonWidget(
                     path: mountPointPath,
-                    asyncPathModifierHook: getMountPointPath,
+                    asyncPathModifierHook: FolderUtils().getMountPointPath,
                   ),
                   OutlinedButton(
                     onPressed: () {

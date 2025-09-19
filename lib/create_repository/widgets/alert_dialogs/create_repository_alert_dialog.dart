@@ -26,12 +26,12 @@ class CreateRepositoryAlertDialog extends StatelessWidget {
         child: BlocBuilder<CreateRepositoryCubit, CreateRepositoryModel>(
             builder: (context, state) {
           return FutureBuilder(
-            future: ResticCommandExecutor(
+            future: ResticCommandExecutor().executeCommandAsync(
               ResticCommandInit(
                 repository: state.path!,
                 passwordFile: state.passwordFile!,
               ),
-            ).executeCommandAsync(),
+            ),
             builder: (context, state) {
               if (!state.hasData) {
                 return Center(

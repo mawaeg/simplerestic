@@ -49,13 +49,13 @@ class SnapshotForgetAlertDialog extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    await ResticCommandExecutor(
+                    await ResticCommandExecutor().executeCommandAsync(
                       ResticCommandForget(
                         repository: repository.path,
                         passwordFile: repository.passwordFile,
                         snapshotId: snapshot.id,
                       ),
-                    ).executeCommandAsync();
+                    );
                     if (context.mounted) {
                       context
                           .read<SnapshotsListCubit>()

@@ -23,8 +23,8 @@ class SnapshotListView extends StatelessWidget {
     return BlocBuilder<SnapshotRebuildCubit, bool>(
       builder: (context, state) {
         return FutureBuilder(
-          future:
-              createSnapshotListModel(repository.path, repository.passwordFile),
+          future: SnapshotListModelCreator()
+              .create(repository.path, repository.passwordFile),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(

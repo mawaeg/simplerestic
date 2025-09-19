@@ -37,7 +37,7 @@ class SnapshotRestoreStatusAlertDialog extends StatelessWidget {
         width: 350,
         height: 116,
         child: StreamBuilder(
-          stream: ResticCommandExecutor(command).executeCommand(),
+          stream: ResticCommandExecutor().executeCommand(command),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return Center();

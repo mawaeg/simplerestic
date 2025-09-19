@@ -20,7 +20,7 @@ class OpenFolderButtonWidget extends StatelessWidget {
         if (asyncPathModifierHook != null) {
           folderPath = await asyncPathModifierHook!(path);
         }
-        await openFolder(folderPath);
+        await FolderUtils().openFolder(folderPath);
       },
       child: Text("Open folder"),
     );
