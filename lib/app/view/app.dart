@@ -6,6 +6,7 @@ import '../../common/cubits/repository_cubit.dart';
 import '../../common/cubits/snapshot_cubit.dart';
 import '../../common/cubits/snapshot_rebuild_cubit.dart';
 import '../../common/cubits/snapshots_list_cubit.dart';
+import '../../common/database/database_manager.dart';
 import '../../create_repository/cubits/create_repository_cubit.dart';
 import '../../detail_snapshot/cubits/prune_data_button_cubit.dart';
 import '../../restore_snapshot/cubits/restore_snapshot_cubit.dart';
@@ -20,8 +21,11 @@ class SimpleResticApp extends StatelessWidget {
       builder: (context, yaru, child) {
         return MultiBlocProvider(
           providers: [
-            BlocProvider(create: (_) => RepositoryCubit()..init()),
-            BlocProvider(create: (_) => SnapshotCubit()..init()),
+            BlocProvider(
+              create: (_) => RepositoryCubit(DatabaseManager())..init(),
+            ),
+            BlocProvider(
+                create: (_) => SnapshotCubit(DatabaseManager())..init()),
             BlocProvider(create: (_) => CreateRepositoryCubit()),
             BlocProvider(create: (_) => SnapshotRebuildCubit()),
             BlocProvider(create: (_) => PruneDataButtonCubit()),

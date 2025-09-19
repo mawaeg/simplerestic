@@ -10,7 +10,7 @@ class RepositoryModel {
     required this.path,
     required this.passwordFile,
     required this.snapshotInterval,
-    required this.alias,
+    this.alias,
   });
 
   Map<String, Object?> toMap() {

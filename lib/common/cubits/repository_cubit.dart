@@ -4,20 +4,21 @@ import '../database/database_manager.dart';
 import '../models/repository_model.dart';
 
 class RepositoryCubit extends Cubit<List<RepositoryModel>> {
-  RepositoryCubit() : super(const []);
+  final DatabaseManager databaseManager;
+  RepositoryCubit(this.databaseManager) : super(const []);
 
-  void init() async {
-    final repositories = await DatabaseManager().getRepositories();
+  Future<void> init() async {
+    final repositories = await databaseManager.getRepositories();
     emit(repositories);
   }
 
-  void addRepository(RepositoryModel repository) async {
-    final newModel = await DatabaseManager().insertRepository(repository);
+  Future<void> addRepository(RepositoryModel repository) async {
+    final newModel = await databaseManager.insertRepository(repository);
     emit(List.of(state)..add(newModel));
   }
 
-  void updateRepository(RepositoryModel repository) async {
-    await DatabaseManager().updateRepository(repository);
+  Future<void> updateRepository(RepositoryModel repository) async {
+    await databaseManager.updateRepository(repository);
     int index = state.indexWhere((element) => element.id == repository.id);
     emit(
       List.of(state)
@@ -26,8 +27,8 @@ class RepositoryCubit extends Cubit<List<RepositoryModel>> {
     );
   }
 
-  void removeRepository(RepositoryModel repository) async {
-    await DatabaseManager().deleteRepository(repository);
+  Future<void> removeRepository(RepositoryModel repository) async {
+    await databaseManager.deleteRepository(repository);
     emit(List.of(state)..remove(repository));
   }
 }

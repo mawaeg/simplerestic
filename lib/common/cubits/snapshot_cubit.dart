@@ -4,20 +4,21 @@ import '../database/database_manager.dart';
 import '../models/snapshot_model.dart';
 
 class SnapshotCubit extends Cubit<List<SnapshotModel>> {
-  SnapshotCubit() : super(const []);
+  final DatabaseManager databaseManager;
+  SnapshotCubit(this.databaseManager) : super(const []);
 
-  void init() async {
-    final snapshots = await DatabaseManager().getSnapshots();
+  Future<void> init() async {
+    final snapshots = await databaseManager.getSnapshots();
     emit(snapshots);
   }
 
-  void addSnapshot(SnapshotModel snapshot) async {
-    SnapshotModel newModel = await DatabaseManager().insertSnapshot(snapshot);
+  Future<void> addSnapshot(SnapshotModel snapshot) async {
+    SnapshotModel newModel = await databaseManager.insertSnapshot(snapshot);
     emit(List.of(state)..add(newModel));
   }
 
-  void updateSnapshot(int repositoryId, SnapshotModel snapshot) async {
-    await DatabaseManager().updateSnapshot(repositoryId, snapshot);
+  Future<void> updateSnapshot(int repositoryId, SnapshotModel snapshot) async {
+    await databaseManager.updateSnapshot(repositoryId, snapshot);
     int index = state.indexWhere((element) => element.id == snapshot.id);
     emit(
       List.of(state)
@@ -26,13 +27,13 @@ class SnapshotCubit extends Cubit<List<SnapshotModel>> {
     );
   }
 
-  void removeSnapshot(SnapshotModel snapshot) async {
-    await DatabaseManager().deleteSnapshot(snapshot);
+  Future<void> removeSnapshot(SnapshotModel snapshot) async {
+    await databaseManager.deleteSnapshot(snapshot);
     emit(List.of(state)..remove(snapshot));
   }
 
-  void removeSnapshotByPath(int repositoryId, List<String> path) async {
-    await DatabaseManager().deleteSnapshotByPath(repositoryId, path);
+  Future<void> removeSnapshotByPath(int repositoryId, List<String> path) async {
+    await databaseManager.deleteSnapshotByPath(repositoryId, path);
     emit(
       List.of(state)
         ..removeWhere((element) =>
