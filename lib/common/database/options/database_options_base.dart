@@ -1,5 +1,7 @@
 import 'package:sqflite/sqlite_api.dart';
 
+// coverage:ignore-file
+
 /// Base class for all DatabaseOptions mixins.
 ///
 /// This abstract class injects the two external functions [init] and [close] in the mixins.

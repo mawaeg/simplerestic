@@ -19,6 +19,7 @@ mixin SnapshotDatabaseOptions implements DatabaseOptionsBase {
     );
   }
 
+  // ToDo Use repositoryId of snapshot model?
   Future<void> updateSnapshot(int repositoryId, SnapshotModel snapshot) async {
     Database database = await init();
     await database.update(

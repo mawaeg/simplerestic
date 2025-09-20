@@ -1,17 +1,25 @@
 import 'dart:io';
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
+import '../utils/abstraction_layer.dart';
 import 'options/repository_database_options.dart';
 import 'options/snapshot_database_options.dart';
 
 /// This class bundles all DatabaseOption mixins to one point.
 class DatabaseManager with RepositoryDatabaseOptions, SnapshotDatabaseOptions {
+  final DirectoryPathProvider directoryPathProvider;
 
-  Future<String> getDBPathAndCreateFileIfNotExists() async{
-    Directory appDocDir = await getApplicationDocumentsDirectory();
-    File datbaseFile = await File(join(appDocDir.path, "simplerestic/db/database.db")).create(recursive: true);
+  const DatabaseManager({
+    this.directoryPathProvider = const DirectoryPathProvider(),
+  });
+
+  Future<String> getDBPathAndCreateFileIfNotExists() async {
+    String appDocDirPath =
+        await directoryPathProvider.getApplicationDocumentsDirectoryPath();
+    File datbaseFile =
+        await File(join(appDocDirPath, "simplerestic/db/database.db"))
+            .create(recursive: true);
 
     return datbaseFile.path;
   }
