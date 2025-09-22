@@ -23,7 +23,7 @@ class _SnapshotPathTextFieldWidgetState
   Widget build(BuildContext context) {
     return BaseTextFieldWidget(
       description: "The path you want to create a snapshot for.",
-      hintText: "Path",
+      hintText: "Split multiple paths with \",\"",
       controller: widget._pathController,
       suffixIcon: YaruIconButton(
         onPressed: () async {
@@ -41,8 +41,11 @@ class _SnapshotPathTextFieldWidgetState
         if (value == null || value.isEmpty) {
           return "Path is required.";
         }
-        if (!Directory(value).existsSync()) {
-          return "The path to the folder must be valid.";
+        List<String> paths = value.split(",");
+        for (String path in paths) {
+          if (!Directory(path).existsSync()) {
+            return "The path(s) to the folder(s) must be valid.";
+          }
         }
         return null;
       },

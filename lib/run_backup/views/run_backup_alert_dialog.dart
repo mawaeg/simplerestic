@@ -13,7 +13,7 @@ import '../widgets/run_backup_stream_builder_widget.dart';
 
 class RunBackupAlertDialog extends StatelessWidget {
   final RepositoryModel repository;
-  final String path;
+  final List<String> path;
 
   const RunBackupAlertDialog({
     super.key,

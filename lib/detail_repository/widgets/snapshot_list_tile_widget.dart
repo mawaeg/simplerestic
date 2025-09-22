@@ -39,7 +39,7 @@ class SnapshotListTileWidget extends StatelessWidget {
       ),
       leading: RunBackupButtonWidget(
         repository: repository,
-        formattedPath: formattedPath,
+        path: path,
       ),
       trailing: Row(
         children: [

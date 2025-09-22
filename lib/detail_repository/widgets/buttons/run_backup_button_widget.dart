@@ -7,12 +7,12 @@ import '../../../run_backup/views/run_backup_alert_dialog.dart';
 
 class RunBackupButtonWidget extends StatelessWidget {
   final RepositoryModel repository;
-  final String formattedPath;
+  final List<String> path;
 
   const RunBackupButtonWidget({
     super.key,
     required this.repository,
-    required this.formattedPath,
+    required this.path,
   });
 
   @override
@@ -24,7 +24,7 @@ class RunBackupButtonWidget extends StatelessWidget {
           builder: (context) {
             return RunBackupAlertDialog(
               repository: repository,
-              path: formattedPath,
+              path: path,
             );
           },
         );

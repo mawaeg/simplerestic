@@ -31,7 +31,7 @@ class CreateSnapshotButtonWidget extends StatelessWidget {
             context.read<SnapshotCubit>().addSnapshot(
                   SnapshotModel(
                     repositoryId: repository.id!,
-                    path: [pathController.text],
+                    path: pathController.text.split(","),
                     alias: aliasController.text,
                   ),
                 );
@@ -42,7 +42,7 @@ class CreateSnapshotButtonWidget extends StatelessWidget {
             builder: (context) {
               return RunBackupAlertDialog(
                 repository: repository,
-                path: pathController.text,
+                path: pathController.text.split(","),
               );
             },
           );

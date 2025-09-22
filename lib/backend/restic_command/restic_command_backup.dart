@@ -6,13 +6,13 @@ import 'base/restic_command_cli.dart';
 import 'base/restic_command_type.dart';
 
 class ResticCommandBackup extends ResticCommandCli {
-  final String path;
+  final List<String> path;
 
   ResticCommandBackup({
     required super.repository,
     required super.passwordFile,
     required this.path,
-  }) : super(type: ResticCommandType.backup, args: [path]);
+  }) : super(type: ResticCommandType.backup, args: path);
 
   @override
   ResticJsonType? parseJson(dynamic json) {

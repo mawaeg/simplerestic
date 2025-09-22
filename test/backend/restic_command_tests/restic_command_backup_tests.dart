@@ -8,7 +8,7 @@ void main() {
   ResticCommandBackup resticCommand = ResticCommandBackup(
     repository: "testRepo",
     passwordFile: "testPassword",
-    path: "testPath",
+    path: ["testPath"],
   );
   group(
       "Check that ResticCommandBackup builds commands as expected and correctly parses Json",
