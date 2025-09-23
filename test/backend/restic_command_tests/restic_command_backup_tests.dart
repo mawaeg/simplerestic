@@ -5,18 +5,41 @@ import 'package:simplerestic/backend/restic_types/primitives/backup/restic_backu
 import 'package:simplerestic/backend/restic_types/primitives/backup/restic_backup_summary_type.dart';
 
 void main() {
-  ResticCommandBackup resticCommand = ResticCommandBackup(
-    repository: "testRepo",
-    passwordFile: "testPassword",
-    path: ["testPath"],
-  );
   group(
       "Check that ResticCommandBackup builds commands as expected and correctly parses Json",
       () {
+    late ResticCommandBackup resticCommand;
+
+    setUp(() {
+      resticCommand = ResticCommandBackup(
+        repository: "testRepo",
+        passwordFile: "testPassword",
+        path: ["testPath"],
+      );
+    });
+
     test("Ensure ResticCommandBackup correctly builds a command.", () {
       expect(resticCommand.build(), [
         "backup",
         "--json",
+        "--repo",
+        "testRepo",
+        "--password-file",
+        "testPassword",
+        "testPath"
+      ]);
+    });
+    test("Ensure ResticCommandBackup correctly builds a dry run command.", () {
+      resticCommand = ResticCommandBackup(
+        repository: "testRepo",
+        passwordFile: "testPassword",
+        path: ["testPath"],
+        dryRun: true,
+      );
+      expect(resticCommand.build(), [
+        "backup",
+        "--json",
+        "--dry-run",
         "--repo",
         "testRepo",
         "--password-file",

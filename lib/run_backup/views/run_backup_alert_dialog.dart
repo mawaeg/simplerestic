@@ -14,11 +14,13 @@ import '../widgets/run_backup_stream_builder_widget.dart';
 class RunBackupAlertDialog extends StatelessWidget {
   final RepositoryModel repository;
   final List<String> path;
+  final bool dryRun;
 
   const RunBackupAlertDialog({
     super.key,
     required this.repository,
     required this.path,
+    this.dryRun = false,
   });
 
   @override
@@ -29,7 +31,7 @@ class RunBackupAlertDialog extends StatelessWidget {
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       title: YaruDialogTitleBar(
-        title: Text("Performing backup"),
+        title: Text("Performing backup ${dryRun ? '(Dry run)' : ''}"),
         // ToDo Add mechanism to properly abort backup
         isClosable: true,
         onClose: (_) async {
@@ -45,6 +47,7 @@ class RunBackupAlertDialog extends StatelessWidget {
                 repository: repository.path,
                 passwordFile: repository.passwordFile,
                 path: path,
+                dryRun: dryRun,
               ),
             ),
             builder: (context, snapshot) {
