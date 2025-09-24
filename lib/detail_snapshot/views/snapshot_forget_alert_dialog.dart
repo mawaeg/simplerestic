@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yaru/yaru.dart';
 
-import '../../backend/restic_command/restic_command_forget.dart';
-import '../../backend/restic_command_executor.dart';
 import '../../backend/restic_types/primitives/snapshots/restic_snapshots_object_type.dart';
 import '../../common/cubits/snapshots_list_cubit.dart';
 import '../../common/models/repository_model.dart';
 import '../cubits/prune_data_button_cubit.dart';
+import 'snapshot_forget_running_alert_dialog.dart';
 
 class SnapshotForgetAlertDialog extends StatelessWidget {
   final RepositoryModel repository;
@@ -49,11 +48,12 @@ class SnapshotForgetAlertDialog extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    await ResticCommandExecutor().executeCommandAsync(
-                      ResticCommandForget(
-                        repository: repository.path,
-                        passwordFile: repository.passwordFile,
-                        snapshotId: snapshot.id,
+                    await showDialog(
+                      context: context,
+                      builder: (context) =>
+                          SnapshotForgetProgressIndicatorAlertDialog(
+                        repository: repository,
+                        snapshot: snapshot,
                       ),
                     );
                     if (context.mounted) {
