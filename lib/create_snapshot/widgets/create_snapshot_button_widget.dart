@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:yaru/yaru.dart';
 
 import '../../common/cubits/snapshot_cubit.dart';
-import '../../common/cubits/snapshot_rebuild_cubit.dart';
 import '../../common/models/repository_model.dart';
 import '../../common/models/snapshot_model.dart';
 import '../../run_backup/views/run_backup_alert_dialog.dart';
 
-//ToDo Add support for multiple paths
 class CreateSnapshotButtonWidget extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final RepositoryModel repository;
@@ -22,9 +21,35 @@ class CreateSnapshotButtonWidget extends StatelessWidget {
     required this.aliasController,
   });
 
+  Future<void> showRunBackupDialog(
+    BuildContext context, {
+    bool dryRun = false,
+  }) async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return RunBackupAlertDialog(
+          repository: repository,
+          path: pathController.text.split(","),
+          dryRun: dryRun,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return YaruSplitButton(
+      items: [
+        PopupMenuItem(
+          child: Text("Dry run"),
+          onTap: () async {
+            if (formKey.currentState!.validate()) {
+              await showRunBackupDialog(context, dryRun: true);
+            }
+          },
+        ),
+      ],
       onPressed: () async {
         if (formKey.currentState!.validate()) {
           if (aliasController.text.isNotEmpty) {
@@ -37,27 +62,13 @@ class CreateSnapshotButtonWidget extends StatelessWidget {
                 );
           }
 
-          await showDialog(
-            context: context,
-            builder: (context) {
-              return RunBackupAlertDialog(
-                repository: repository,
-                path: pathController.text.split(","),
-              );
-            },
-          );
+          await showRunBackupDialog(context);
 
           if (context.mounted) {
-            // Refresh snapshot list to show newly created backup
-            context.read<SnapshotRebuildCubit>().toggle();
-
             await Navigator.maybePop(context);
           }
         }
       },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-      ),
       child: Text("Create"),
     );
   }
