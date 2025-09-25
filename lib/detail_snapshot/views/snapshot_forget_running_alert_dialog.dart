@@ -39,7 +39,7 @@ class SnapshotForgetProgressIndicatorAlertDialog extends StatelessWidget {
                 if (snapshot.connectionState == ConnectionState.done) {
                   Navigator.pop(context);
                 }
-                return Center(child: CircularProgressIndicator());
+                return Center(child: YaruCircularProgressIndicator());
               })),
     );
   }

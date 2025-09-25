@@ -83,7 +83,7 @@ class MountAlertDialog extends StatelessWidget {
             ),
           );
         }
-        return Center(child: CircularProgressIndicator());
+        return Center(child: YaruCircularProgressIndicator());
       },
     );
   }
