@@ -5,6 +5,7 @@ import '../../backend/restic_types/primitives/snapshots/restic_snapshots_object_
 import '../../common/models/repository_model.dart';
 import '../../common/models/snapshot_model.dart';
 import '../../common/widgets/mount_button_widget.dart';
+import '../../common/widgets/tap_to_copy_text.dart';
 import 'buttons/edit_snapshot_button_widget.dart';
 import 'buttons/run_backup_button_widget.dart';
 import 'buttons/snapshot_detail_button_widget.dart';
@@ -28,8 +29,11 @@ class SnapshotListTileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     String formattedPath = SnapshotModel.getPathListAsFormattedString(path);
     return YaruTile(
-      title: Text(
-        snapshot?.alias ?? formattedPath,
+      title: TapToCopyText(
+        text: snapshot?.alias ?? formattedPath,
+        textToCopy: formattedPath,
+        description: "path",
+        tooltipMessage: snapshot?.alias != null ? formattedPath : null,
       ),
       subtitle: SnapshotListTileSubtitleWidget(
         formattedPath: formattedPath,

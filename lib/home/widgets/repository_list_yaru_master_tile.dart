@@ -5,6 +5,7 @@ import 'package:yaru/yaru.dart';
 import '../../common/cubits/repository_cubit.dart';
 import '../../common/models/repository_model.dart';
 import '../../common/widgets/simple_restic_yaru_option_button.dart';
+import '../../common/widgets/tap_to_copy_text.dart';
 import '../../create_repository/view/create_repository_alert_dialog.dart';
 
 class RepositoryListYaruMasterTile extends StatelessWidget {
@@ -17,8 +18,15 @@ class RepositoryListYaruMasterTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return YaruMasterTile(
-      title: Text(
-        repository.alias ?? repository.path,
+      title: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TapToCopyText(
+            text: repository.alias ?? repository.path,
+            textToCopy: repository.path,
+            description: "path",
+          ),
+        ],
       ),
       subtitle: repository.alias != null ? Text(repository.path) : null,
       trailing: Row(
