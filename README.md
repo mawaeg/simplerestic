@@ -37,7 +37,23 @@ Currently, simplerestic only works with Linux (tested with Ubuntu 24.04).
 
 ## 🚀 Installation & Usage
 
-TBD
+Currently, there is no prebuilt executable available.
+
+To build simplerestic yourself, you need to have [Flutter](https://docs.flutter.dev/install) installed.
+- It is recommended to just use [fvm](https://fvm.app/)
+  - fvm will automatically install and use the correct flutter version to ensure compatibility.
+- Alternatively, you can also install the [currently used version](.fvmrc) globally on your machine
+
+The command to build the application:
+```bash
+fvm flutter build linux
+```
+(Without fvm):
+```bash
+flutter build linux
+```
+
+After running the build command you should find the executable under `build/linux/x64/release/bundle`.
 
 ---
 
