@@ -3,6 +3,8 @@ import '../base/restic_base_summary_type.dart';
 /// Represents the json output for the backup command of message_type `summary`.
 class ResticBackupSummaryType extends ResticBaseSummaryType {
   final double totalDuration;
+  final DateTime backupStart;
+  final DateTime backupEnd;
   final String snapshotId;
 
   ResticBackupSummaryType(
@@ -19,6 +21,8 @@ class ResticBackupSummaryType extends ResticBaseSummaryType {
     super.totalFilesProcessed,
     super.totalBytesProcessed,
     this.totalDuration,
+    this.backupStart,
+    this.backupEnd,
     this.snapshotId,
   );
 
@@ -37,13 +41,15 @@ class ResticBackupSummaryType extends ResticBaseSummaryType {
         json["total_files_processed"],
         json["total_bytes_processed"],
         json["total_duration"],
+        DateTime.parse(json["backup_start"]),
+        DateTime.parse(json["backup_end"]),
         json["snapshot_id"],
       );
 
   @override
   List<Object?> get props {
     List<Object?> superProps = super.props;
-    superProps.addAll([totalDuration, snapshotId]);
+    superProps.addAll([totalDuration, backupStart, backupEnd, snapshotId]);
     return superProps;
   }
 }

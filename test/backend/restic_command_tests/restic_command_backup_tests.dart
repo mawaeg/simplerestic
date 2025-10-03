@@ -95,12 +95,30 @@ void main() {
         "total_files_processed": 11,
         "total_bytes_processed": 12,
         "total_duration": 13.0,
+        "backup_start": "2000-01-01T00:00:00.000Z",
+        "backup_end": "2001-02-02T00:00:00.000Z",
         "snapshot_id": "testSnapshotId"
       };
       expect(
         resticCommand.parseJson(summaryJson),
         ResticBackupSummaryType(
-            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13.0, "testSnapshotId"),
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13.0,
+          DateTime.parse("2000-01-01T00:00:00.000Z"),
+          DateTime.parse("2001-02-02T00:00:00.000Z"),
+          "testSnapshotId",
+        ),
       );
 
       Map<String, dynamic> errorJson = {

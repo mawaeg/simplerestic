@@ -7,6 +7,8 @@ import 'restic_types/restic_error_type.dart';
 import 'restic_types/restic_return_type.dart';
 import 'restic_types/base/restic_scripting_base_type.dart';
 
+const String resticPath = "assets/restic_0.18.1_linux_amd64";
+
 class ResticCommandExecutor {
   final ProcessRunner processRunner;
 
@@ -16,7 +18,7 @@ class ResticCommandExecutor {
 
   Future<Process> startCommandProcess(ResticCommand command) async {
     final process = await processRunner.start(
-      "assets/restic_0.17.3_linux_amd64",
+      resticPath,
       command.build(),
     );
     return process;

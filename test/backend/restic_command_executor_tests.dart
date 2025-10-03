@@ -47,15 +47,14 @@ void main() {
     });
 
     test("Assert that startCommandProcessworks as expected", () {
-      when(() => processRunnerMock.start(
-          any(that: equals("assets/restic_0.17.3_linux_amd64")),
+      when(() => processRunnerMock.start(any(that: equals(resticPath)),
           any(that: equals(testCommand.build())))).thenAnswer(
         (_) => Future.value(Process.start("echo", ["test"])),
       );
       executor.startCommandProcess(testCommand);
 
-      verify(() => processRunnerMock.start(
-          "assets/restic_0.17.3_linux_amd64", testCommand.build())).called(1);
+      verify(() => processRunnerMock.start(resticPath, testCommand.build()))
+          .called(1);
     });
 
     test("Assert that parseJson correctly parses a valid json", () {
@@ -82,10 +81,9 @@ void main() {
       // Here we want to run the real command, therefore we use the real ProcessRunner
       final ProcessRunner processRunner = ProcessRunner();
 
-      when(() => processRunnerMock.start(
-          "assets/restic_0.17.3_linux_amd64", testCommand.build())).thenAnswer(
-        (_) => processRunner.start(
-            "assets/restic_0.17.3_linux_amd64", testCommand.build()),
+      when(() => processRunnerMock.start(resticPath, testCommand.build()))
+          .thenAnswer(
+        (_) => processRunner.start(resticPath, testCommand.build()),
       );
 
       List<ResticScriptingBaseType> output =
@@ -115,10 +113,9 @@ void main() {
       // Here we want to run the real command, therefore we use the real ProcessRunner
       final ProcessRunner processRunner = ProcessRunner();
 
-      when(() => processRunnerMock.start(
-          "assets/restic_0.17.3_linux_amd64", testCommand.build())).thenAnswer(
-        (_) => processRunner.start(
-            "assets/restic_0.17.3_linux_amd64", testCommand.build()),
+      when(() => processRunnerMock.start(resticPath, testCommand.build()))
+          .thenAnswer(
+        (_) => processRunner.start(resticPath, testCommand.build()),
       );
 
       List<ResticScriptingBaseType> output = [];
