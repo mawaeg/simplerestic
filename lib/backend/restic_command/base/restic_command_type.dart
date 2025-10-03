@@ -8,4 +8,5 @@ enum ResticCommandType {
   restore,
   mount,
   forget,
+  check,
 }
