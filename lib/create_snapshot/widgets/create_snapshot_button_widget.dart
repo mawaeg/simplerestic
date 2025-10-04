@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yaru/yaru.dart';
 
+import '../../backend/restic_command/restic_command_backup.dart';
 import '../../common/cubits/snapshot_cubit.dart';
 import '../../common/models/repository_model.dart';
 import '../../common/models/snapshot_model.dart';
@@ -29,8 +30,11 @@ class CreateSnapshotButtonWidget extends StatelessWidget {
       context: context,
       builder: (context) {
         return RunBackupAlertDialog(
-          repository: repository,
-          path: pathController.text.split(","),
+          backupCommand: ResticCommandBackup(
+            repository: repository.path,
+            passwordFile: repository.passwordFile,
+            path: pathController.text.split(","),
+          ),
           dryRun: dryRun,
         );
       },

@@ -8,18 +8,15 @@ import '../../backend/restic_types/primitives/base/restic_base_error_type.dart';
 import '../../backend/restic_types/primitives/backup/restic_backup_summary_type.dart';
 import '../../backend/restic_types/restic_error_type.dart';
 import '../../common/cubits/snapshot_rebuild_cubit.dart';
-import '../../common/models/repository_model.dart';
 import '../widgets/run_backup_stream_builder_widget.dart';
 
 class RunBackupAlertDialog extends StatelessWidget {
-  final RepositoryModel repository;
-  final List<String> path;
+  final ResticCommandBackup backupCommand;
   final bool dryRun;
 
   const RunBackupAlertDialog({
     super.key,
-    required this.repository,
-    required this.path,
+    required this.backupCommand,
     this.dryRun = false,
   });
 
@@ -42,14 +39,7 @@ class RunBackupAlertDialog extends StatelessWidget {
       content: SizedBox(
         height: 100,
         child: StreamBuilder(
-            stream: ResticCommandExecutor().executeCommand(
-              ResticCommandBackup(
-                repository: repository.path,
-                passwordFile: repository.passwordFile,
-                path: path,
-                dryRun: dryRun,
-              ),
-            ),
+            stream: ResticCommandExecutor().executeCommand(backupCommand),
             builder: (context, snapshot) {
               // If no data is provided show blank widget
               if (!snapshot.hasData) return Center();

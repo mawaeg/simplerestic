@@ -1,6 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+Future<void> onTapCopyAction(
+  BuildContext context,
+  String textToCopy,
+  String description,
+) async {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(
+        "Copied $description to clipboard.",
+        textWidthBasis: TextWidthBasis.longestLine,
+      ),
+      duration: const Duration(seconds: 2),
+    ),
+  );
+  await Clipboard.setData(ClipboardData(text: textToCopy));
+}
+
 class TapToCopyText extends StatelessWidget {
   final String text;
   final String textToCopy;
@@ -19,16 +36,7 @@ class TapToCopyText extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              "Copied $description to clipboard.",
-              textWidthBasis: TextWidthBasis.longestLine,
-            ),
-            duration: const Duration(seconds: 2),
-          ),
-        );
-        await Clipboard.setData(ClipboardData(text: textToCopy));
+        await onTapCopyAction(context, textToCopy, description);
       },
       child: Tooltip(
         message: tooltipMessage ?? "",

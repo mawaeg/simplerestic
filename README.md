@@ -31,7 +31,6 @@ Currently, simplerestic only works with Linux (tested with Ubuntu 24.04).
 * [ ] Download restic automatically instead of bundling the binary
 * [ ] Add statistics including `stats` command information
 * [ ] Add windows support
-* [ ] Add option to copy the backup command for a certain snapshot
 
 ---
 
