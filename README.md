@@ -14,7 +14,7 @@ Currently, simplerestic only works with Linux (tested with Ubuntu 24.04).
 
 ## ✨ Features
 
-* Create and import restic repositories
+* Create, import and check restic repositories
 * Create, forget, and restore snapshots
   * Supports **dry runs** for snapshot creation
 * Mount repositories (optionally filtered by path)
@@ -24,7 +24,6 @@ Currently, simplerestic only works with Linux (tested with Ubuntu 24.04).
 
 ## 🛠️ Planned Features
 
-* [ ] Integrate the `check` command
 * [ ] Integrate the `copy` command
 * [ ] Compare snapshots
 * [ ] Support environment variables instead of password files
@@ -32,6 +31,7 @@ Currently, simplerestic only works with Linux (tested with Ubuntu 24.04).
 * [ ] Download restic automatically instead of bundling the binary
 * [ ] Add statistics including `stats` command information
 * [ ] Add windows support
+* [ ] Add option to copy the backup command for a certain snapshot
 
 ---
 
