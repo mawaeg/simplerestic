@@ -32,9 +32,11 @@ class _AliasTextFieldWidgetState extends State<AliasTextFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
-    void setPath(String alias) {
+    void setAlias(String alias) {
       if (context.mounted) {
-        context.read<CreateRepositoryCubit>().setAlias(alias);
+        context
+            .read<CreateRepositoryCubit>()
+            .setAlias(alias != "" ? alias : null);
       }
     }
 
@@ -42,7 +44,7 @@ class _AliasTextFieldWidgetState extends State<AliasTextFieldWidget> {
       description: "An optional alias you want to assign to the repository.",
       hintText: "Alias",
       controller: _aliasController,
-      onChanged: setPath,
+      onChanged: setAlias,
     );
   }
 }

@@ -42,6 +42,9 @@ class TapToCopyText extends StatelessWidget {
         message: tooltipMessage ?? "",
         child: Text(
           text,
+          maxLines: 1,
+          softWrap: false,
+          overflow: TextOverflow.ellipsis,
         ),
       ),
     );

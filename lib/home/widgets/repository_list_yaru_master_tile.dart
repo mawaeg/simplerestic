@@ -21,10 +21,12 @@ class RepositoryListYaruMasterTile extends StatelessWidget {
       title: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          TapToCopyText(
-            text: repository.alias ?? repository.path,
-            textToCopy: repository.path,
-            description: "path",
+          Expanded(
+            child: TapToCopyText(
+              text: repository.alias ?? repository.path,
+              textToCopy: repository.path,
+              description: "path",
+            ),
           ),
         ],
       ),
