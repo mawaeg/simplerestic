@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yaru/yaru.dart';
 
 import '../../backend/restic_types/primitives/snapshots/restic_snapshots_object_type.dart';
+import '../../common/cubits/snapshot_rebuild_cubit.dart';
 import '../../common/cubits/snapshots_list_cubit.dart';
 import '../../common/models/repository_model.dart';
 import '../cubits/prune_data_button_cubit.dart';
@@ -60,6 +61,9 @@ class SnapshotForgetAlertDialog extends StatelessWidget {
                       context
                           .read<SnapshotsListCubit>()
                           .removeSnapshot(snapshot.id);
+                      // Refresh snapshot list, so that the snapshot won't be shown when closing and reopening the detail view
+                      // (When reopening, the SnapshotListCubit will be recreated based on the data fetched from restic)
+                      context.read<SnapshotRebuildCubit>().toggle();
                       await Navigator.maybePop(context);
                     }
                   },
