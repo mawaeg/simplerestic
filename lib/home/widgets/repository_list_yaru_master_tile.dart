@@ -17,44 +17,38 @@ class RepositoryListYaruMasterTile extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return YaruMasterTile(
-      title: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Expanded(
-            child: TapToCopyText(
-              text: repository.alias ?? repository.path,
-              textToCopy: repository.path,
-              description: "path",
+    return GestureDetector(
+      onLongPress: () async {
+        await onTapCopyAction(context, repository.path, "path");
+      },
+      child: YaruMasterTile(
+        title: Text(repository.alias ?? repository.path),
+        subtitle: repository.alias != null ? Text(repository.path) : null,
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SimpleResticYaruOptionButton(
+              onPressed: () async {
+                await showDialog(
+                  context: context,
+                  builder: (context) {
+                    return CreateRepositoryAlertDialog(
+                      create: false,
+                      repository: repository,
+                    );
+                  },
+                );
+              },
+              child: const Icon(YaruIcons.settings),
             ),
-          ),
-        ],
-      ),
-      subtitle: repository.alias != null ? Text(repository.path) : null,
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SimpleResticYaruOptionButton(
-            onPressed: () async {
-              await showDialog(
-                context: context,
-                builder: (context) {
-                  return CreateRepositoryAlertDialog(
-                    create: false,
-                    repository: repository,
-                  );
-                },
-              );
-            },
-            child: const Icon(YaruIcons.settings),
-          ),
-          SimpleResticYaruOptionButton(
-            onPressed: () {
-              context.read<RepositoryCubit>().removeRepository(repository);
-            },
-            child: const Icon(YaruIcons.trash),
-          ),
-        ],
+            SimpleResticYaruOptionButton(
+              onPressed: () {
+                context.read<RepositoryCubit>().removeRepository(repository);
+              },
+              child: const Icon(YaruIcons.trash),
+            ),
+          ],
+        ),
       ),
     );
   }
