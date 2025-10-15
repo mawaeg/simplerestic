@@ -34,6 +34,7 @@ class CreateSnapshotButtonWidget extends StatelessWidget {
             repository: repository.path,
             passwordFile: repository.passwordFile,
             path: pathController.text.split(","),
+            dryRun: dryRun,
           ),
           dryRun: dryRun,
         );
