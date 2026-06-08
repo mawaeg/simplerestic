@@ -29,17 +29,19 @@ class ResticCommandExecutor {
     bool returnTypeDelay = true,
   }) async* {
     final process = await startCommandProcess(command);
-    await for (var data in process.stdout.transform(utf8.decoder)) {
-      for (var json in data.split("\n")) {
-        if (json.isNotEmpty) {
-          ResticScriptingBaseType? resticJsonType = parseJson(command, json);
-          if (resticJsonType != null) {
-            yield resticJsonType;
-          }
+    final Stream stdoutStream =
+        process.stdout.transform(utf8.decoder).transform(const LineSplitter());
+    await for (var json in stdoutStream) {
+      if (json.isNotEmpty) {
+        ResticScriptingBaseType? resticJsonType = parseJson(command, json);
+        if (resticJsonType != null) {
+          yield resticJsonType;
         }
       }
     }
-    await for (var data in process.stderr.transform(utf8.decoder)) {
+    final Stream stderrStream =
+        process.stderr.transform(utf8.decoder).transform(const LineSplitter());
+    await for (var data in stderrStream) {
       //stderr is printed as plain text
       yield ResticErrorType(data);
     }
