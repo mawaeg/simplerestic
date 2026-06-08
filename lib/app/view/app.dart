@@ -11,6 +11,7 @@ import '../../create_repository/cubits/create_repository_cubit.dart';
 import '../../detail_snapshot/cubits/prune_data_button_cubit.dart';
 import '../../restore_snapshot/cubits/restore_snapshot_cubit.dart';
 import '../../home/view/home_view.dart';
+import '../../run_backup/blocs/backup_queue_bloc.dart';
 
 class SimpleResticApp extends StatelessWidget {
   const SimpleResticApp({super.key});
@@ -31,6 +32,7 @@ class SimpleResticApp extends StatelessWidget {
             BlocProvider(create: (_) => PruneDataButtonCubit()),
             BlocProvider(create: (_) => SnapshotsListCubit()),
             BlocProvider(create: (_) => RestoreSnapshotCubit()),
+            BlocProvider(create: (_) => BackupQueueBloc()),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
