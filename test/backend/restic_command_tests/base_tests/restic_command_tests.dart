@@ -8,11 +8,11 @@ import 'package:simplerestic/backend/restic_types/base/restic_json_type.dart';
 
 //Impl needed to test abstract class.
 class ResticCommandTestImpl extends ResticCommand {
-  ResticCommandTestImpl({
+  const ResticCommandTestImpl({
     required super.type,
-    super.flags,
-    super.options,
-    super.args,
+    super.commandFlags,
+    super.commandOptions,
+    super.commandArgs,
   });
 
   @override
@@ -35,11 +35,11 @@ void main() {
         () {
       ResticCommandTestImpl resticCommand = ResticCommandTestImpl(
         type: ResticCommandType.init,
-        flags: [ResticCommandFlagType.json],
-        options: [
+        commandFlags: [ResticCommandFlagType.json],
+        commandOptions: [
           ResticCommandOption(ResticCommandOptionType.repo, "testRepo")
         ],
-        args: ["testArg"],
+        commandArgs: ["testArg"],
       );
 
       List<String> expected = [
@@ -57,15 +57,15 @@ void main() {
         () {
       ResticCommandTestImpl resticCommand = ResticCommandTestImpl(
         type: ResticCommandType.init,
-        flags: [ResticCommandFlagType.json, ResticCommandFlagType.quiet],
-        options: [
+        commandFlags: [ResticCommandFlagType.json, ResticCommandFlagType.quiet],
+        commandOptions: [
           ResticCommandOption(ResticCommandOptionType.repo, "testRepo"),
           ResticCommandOption(
             ResticCommandOptionType.password_file,
             "testPassword",
           ),
         ],
-        args: ["testArg", "testArg2"],
+        commandArgs: ["testArg", "testArg2"],
       );
 
       List<String> expected = [

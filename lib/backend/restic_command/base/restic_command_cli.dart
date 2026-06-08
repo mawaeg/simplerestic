@@ -25,8 +25,8 @@ abstract class ResticCommandCli extends ResticCommand {
     this.options,
     this.args,
   }) : super(
-          flags: defaultFlags + (flags ?? []),
-          options: [
+          commandFlags: defaultFlags + (flags ?? []),
+          commandOptions: [
                 ResticCommandOption(
                   ResticCommandOptionType.repo,
                   repository,
@@ -37,6 +37,6 @@ abstract class ResticCommandCli extends ResticCommand {
                 ),
               ] +
               (options ?? []),
-          args: args,
+          commandArgs: args ?? [],
         );
 }
