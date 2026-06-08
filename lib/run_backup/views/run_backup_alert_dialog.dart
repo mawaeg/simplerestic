@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yaru/yaru.dart';
 
 import '../../backend/restic_command/restic_command_backup.dart';
-import '../../backend/restic_command_executor.dart';
-import '../../backend/restic_types/primitives/base/restic_base_error_type.dart';
-import '../../backend/restic_types/primitives/backup/restic_backup_summary_type.dart';
-import '../../backend/restic_types/restic_error_type.dart';
+import '../../backend/restic_types/base/restic_scripting_base_type.dart';
+import '../../backend/restic_types/primitives/backup/restic_backup_status_type.dart';
 import '../../common/cubits/snapshot_rebuild_cubit.dart';
+import '../blocs/backup_queue_bloc.dart';
+import '../models/backup_queue_event.dart';
+import '../models/backup_queue_state.dart';
+import '../models/finished_backup_model.dart';
 import '../widgets/run_backup_stream_builder_widget.dart';
 
 class RunBackupAlertDialog extends StatelessWidget {
@@ -22,9 +24,7 @@ class RunBackupAlertDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ResticBackupSummaryType? summary;
-    ResticErrorType? errorType;
-    ResticBaseErrorType? backupErrorType;
+    FinishedBackupModel? finishedBackup;
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       title: YaruDialogTitleBar(
@@ -38,31 +38,34 @@ class RunBackupAlertDialog extends StatelessWidget {
       ),
       content: SizedBox(
         height: 100,
-        child: StreamBuilder(
-            stream: ResticCommandExecutor().executeCommand(backupCommand),
-            builder: (context, snapshot) {
-              // If no data is provided show blank widget
-              if (!snapshot.hasData) return Center();
-
-              // Save summary and error
-              if (snapshot.data is ResticBackupSummaryType) {
-                summary = snapshot.data as ResticBackupSummaryType;
-              }
-              if (snapshot.data is ResticBaseErrorType) {
-                backupErrorType = snapshot.data as ResticBaseErrorType;
-              }
-              if (snapshot.data is ResticErrorType) {
-                errorType = snapshot.data as ResticErrorType;
-              }
-
-              return RunBackupStreamBuilderWidget(
-                data: snapshot.data!,
-                connectionState: snapshot.connectionState,
-                summary: summary,
-                backupErrorType: backupErrorType,
-                errorType: errorType,
-              );
-            }),
+        child: BlocBuilder<BackupQueueBloc, BackupQueueState>(
+            builder: (context, state) {
+          ResticScriptingBaseType? data = state.lastOutput;
+          if (state.isCommandQueued(backupCommand)) {
+            return Center(
+              child: Text("Command is currently queued to be executed."),
+            );
+          }
+          // Check if we have previous data:
+          int finishedBackupsIndex = state.finishedBackups
+              .indexWhere((element) => element.command == backupCommand);
+          if (finishedBackupsIndex != -1) {
+            context
+                .read<BackupQueueBloc>()
+                .add(RemoveFinishedCommand(backupCommand));
+            finishedBackup = state.finishedBackups[finishedBackupsIndex];
+          }
+          ResticBackupStatusType? statusType;
+          if (data is ResticBackupStatusType &&
+              state.currentCommand == backupCommand) {
+            statusType = data;
+          }
+          return RunBackupStreamBuilderWidget(
+            isActive: state.isActive && state.currentCommand == backupCommand,
+            statusType: statusType,
+            finishedBackupModel: finishedBackup,
+          );
+        }),
       ),
     );
   }

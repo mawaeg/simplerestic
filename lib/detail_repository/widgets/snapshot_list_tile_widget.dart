@@ -7,7 +7,7 @@ import '../../common/models/snapshot_model.dart';
 import '../../common/widgets/mount_button_widget.dart';
 import '../../common/widgets/tap_to_copy_text.dart';
 import 'buttons/edit_snapshot_button_widget.dart';
-import 'buttons/run_backup_button_widget.dart';
+import 'run_backup_button_selector_widget.dart';
 import 'buttons/snapshot_detail_button_widget.dart';
 import 'snapshot_list_tile_subtitle_widget.dart';
 
@@ -41,7 +41,7 @@ class SnapshotListTileWidget extends StatelessWidget {
         repository: repository,
         snapshot: snapshot,
       ),
-      leading: RunBackupButtonWidget(
+      leading: RunBackupButtonSelectorWidget(
         repository: repository,
         path: path,
       ),

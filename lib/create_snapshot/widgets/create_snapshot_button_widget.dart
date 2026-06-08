@@ -6,6 +6,8 @@ import '../../backend/restic_command/restic_command_backup.dart';
 import '../../common/cubits/snapshot_cubit.dart';
 import '../../common/models/repository_model.dart';
 import '../../common/models/snapshot_model.dart';
+import '../../run_backup/blocs/backup_queue_bloc.dart';
+import '../../run_backup/models/backup_queue_event.dart';
 import '../../run_backup/views/run_backup_alert_dialog.dart';
 
 class CreateSnapshotButtonWidget extends StatelessWidget {
@@ -29,13 +31,15 @@ class CreateSnapshotButtonWidget extends StatelessWidget {
     await showDialog(
       context: context,
       builder: (context) {
+        ResticCommandBackup command = ResticCommandBackup(
+          repository: repository.path,
+          passwordFile: repository.passwordFile,
+          path: pathController.text.split(","),
+          dryRun: dryRun,
+        );
+        context.read<BackupQueueBloc>().add(AddCommand(command));
         return RunBackupAlertDialog(
-          backupCommand: ResticCommandBackup(
-            repository: repository.path,
-            passwordFile: repository.passwordFile,
-            path: pathController.text.split(","),
-            dryRun: dryRun,
-          ),
+          backupCommand: command,
           dryRun: dryRun,
         );
       },
