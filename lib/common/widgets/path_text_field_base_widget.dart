@@ -55,8 +55,7 @@ class _PathTextFieldBaseWidgetState extends State<PathTextFieldBaseWidget> {
       suffixIcon: YaruIconButton(
         icon: Icon(YaruIcons.folder),
         onPressed: () async {
-          String? selectedDirectory =
-              await FilePicker.platform.getDirectoryPath();
+          String? selectedDirectory = await FilePicker.getDirectoryPath();
           if (selectedDirectory != null) {
             setState(() {
               _controller.text = selectedDirectory;

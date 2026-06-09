@@ -55,7 +55,7 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
       suffixIcon: YaruIconButton(
         onPressed: () async {
           FilePickerResult? filePickerResult =
-              await FilePicker.platform.pickFiles(allowedExtensions: ["txt"]);
+              await FilePicker.pickFiles(allowedExtensions: ["txt"]);
           if (filePickerResult != null && filePickerResult.files.length == 1) {
             setState(() {
               _passwordFileController.text = filePickerResult.files.first.path!;

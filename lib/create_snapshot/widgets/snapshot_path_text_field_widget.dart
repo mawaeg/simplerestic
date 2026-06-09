@@ -27,8 +27,7 @@ class _SnapshotPathTextFieldWidgetState
       controller: widget._pathController,
       suffixIcon: YaruIconButton(
         onPressed: () async {
-          String? selectedDirectory =
-              await FilePicker.platform.getDirectoryPath();
+          String? selectedDirectory = await FilePicker.getDirectoryPath();
           if (selectedDirectory != null) {
             setState(() {
               widget._pathController.text = selectedDirectory;
