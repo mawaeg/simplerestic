@@ -9,8 +9,8 @@ class ResticSnapshotsObjectType extends ResticJsonType {
   final List<String> paths;
   final String hostname;
   final String username;
-  final int uid;
-  final int gid;
+  final int? uid;
+  final int? gid;
   final String programVersion;
   final ResticSnapshotsSummaryType summary;
   final String id;

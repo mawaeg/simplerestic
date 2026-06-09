@@ -8,23 +8,25 @@ import 'restic_types/restic_return_type.dart';
 import 'restic_types/base/restic_scripting_base_type.dart';
 
 const String resticPathLinux = "assets/restic_0.18.1_linux_amd64";
-const String resticPathWindows = "assets/restic_0.18.1_windows_amd64";
+const String resticPathWindows = "assets\\restic_0.18.1_windows_amd64.exe";
 
 class ResticCommandExecutor {
   final ProcessRunner processRunner;
+  final PlatformChecker platformChecker;
 
   const ResticCommandExecutor({
     this.processRunner = const ProcessRunner(),
+    this.platformChecker = const PlatformChecker(),
   });
 
   String getResticPath() {
-    if (PlatformChecker().isLinux) {
+    if (platformChecker.isLinux) {
       return resticPathLinux;
     }
-    if (PlatformChecker().isWindows) {
+    if (platformChecker.isWindows) {
       return resticPathWindows;
     }
-    throw UnimplementedError(
+    throw UnsupportedError(
         "Simplerestic is only supported on Linux and Windows");
   }
 

@@ -31,7 +31,7 @@ class EditSnapshotAlertDialog extends StatelessWidget {
         isClosable: true,
       ),
       content: SizedBox(
-        height: 111,
+        height: 113,
         child: Column(
           children: [
             BaseTextFieldWidget(

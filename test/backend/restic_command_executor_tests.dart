@@ -14,10 +14,14 @@ import 'package:simplerestic/common/utils/abstraction_layer.dart';
 
 class ProcessRunnerMock extends Mock implements ProcessRunner {}
 
+class PlatformCheckerMock extends Mock implements PlatformChecker {}
+
+//ToDo rework tests with windows compatibility added
 void main() {
   group(ResticCommandExecutor, () {
     late ResticCommand testCommand;
     late ProcessRunnerMock processRunnerMock;
+    late PlatformCheckerMock platformCheckerMock;
     late ResticCommandExecutor executor;
     late Directory tempFolder;
     late File passwordFile;
@@ -37,8 +41,10 @@ void main() {
         passwordFile: passwordFile.path,
       );
       processRunnerMock = ProcessRunnerMock();
+      platformCheckerMock = PlatformCheckerMock();
       executor = ResticCommandExecutor(
         processRunner: processRunnerMock,
+        platformChecker: platformCheckerMock,
       );
     });
 
@@ -46,14 +52,36 @@ void main() {
       tempFolder.deleteSync(recursive: true);
     });
 
+    test("Assert that getResticPath works as expected on Linux", () {
+      when(() => platformCheckerMock.isLinux).thenReturn(true);
+
+      expect(executor.getResticPath(), resticPathLinux);
+    });
+
+    test("Assert that getResticPath works as expected on Windows", () {
+      when(() => platformCheckerMock.isLinux).thenReturn(false);
+      when(() => platformCheckerMock.isWindows).thenReturn(true);
+
+      expect(executor.getResticPath(), resticPathWindows);
+    });
+
+    test("Assert that getResticPath throws error on unsupported platform", () {
+      when(() => platformCheckerMock.isLinux).thenReturn(false);
+      when(() => platformCheckerMock.isWindows).thenReturn(false);
+
+      expect(() => executor.getResticPath(), throwsUnsupportedError);
+    });
+
     test("Assert that startCommandProcessworks as expected", () {
-      when(() => processRunnerMock.start(any(that: equals(resticPath)),
+      when(() => platformCheckerMock.isLinux).thenReturn(true);
+      when(() => processRunnerMock.start(any(that: equals(resticPathLinux)),
           any(that: equals(testCommand.build())))).thenAnswer(
         (_) => Future.value(Process.start("echo", ["test"])),
       );
       executor.startCommandProcess(testCommand);
 
-      verify(() => processRunnerMock.start(resticPath, testCommand.build()))
+      verify(() =>
+              processRunnerMock.start(resticPathLinux, testCommand.build()))
           .called(1);
     });
 
@@ -78,12 +106,13 @@ void main() {
 
     test("Assert that executeCommandAsync correctly executes a command",
         () async {
+      when(() => platformCheckerMock.isLinux).thenReturn(true);
+
       // Here we want to run the real command, therefore we use the real ProcessRunner
       final ProcessRunner processRunner = ProcessRunner();
-
-      when(() => processRunnerMock.start(resticPath, testCommand.build()))
+      when(() => processRunnerMock.start(resticPathLinux, testCommand.build()))
           .thenAnswer(
-        (_) => processRunner.start(resticPath, testCommand.build()),
+        (_) => processRunner.start(resticPathLinux, testCommand.build()),
       );
 
       List<ResticScriptingBaseType> output =
@@ -100,6 +129,8 @@ void main() {
     test(
         "Assert that executeCommandAsync correctly executes a command which raises an error during execution",
         () async {
+      when(() => platformCheckerMock.isLinux).thenReturn(true);
+
       // Try to access a non existing repository, which should raise an error
       testCommand = ResticCommandCatConfig(
         repository: repoFolder.path,
@@ -113,9 +144,9 @@ void main() {
       // Here we want to run the real command, therefore we use the real ProcessRunner
       final ProcessRunner processRunner = ProcessRunner();
 
-      when(() => processRunnerMock.start(resticPath, testCommand.build()))
+      when(() => processRunnerMock.start(resticPathLinux, testCommand.build()))
           .thenAnswer(
-        (_) => processRunner.start(resticPath, testCommand.build()),
+        (_) => processRunner.start(resticPathLinux, testCommand.build()),
       );
 
       List<ResticScriptingBaseType> output = [];
