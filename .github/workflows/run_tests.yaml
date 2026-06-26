@@ -1,0 +1,36 @@
+name: Flutter Tests & Coverage
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install lcov (for genhtml)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lcov
+
+      - name: Setup Flutter with FVM
+        uses: subosito/flutter-action@v2
+        with:
+          cache: true
+
+      - name: Install FVM CLI
+        run: dart pub global activate fvm
+
+      - name: Run Python Coverage Script
+        run: python run_tests_with_coverage.py
+
+      - name: Upload HTML Coverage Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/html/
