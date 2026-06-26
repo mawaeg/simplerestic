@@ -5,7 +5,7 @@
 **Simplerestic** is a graphical backup manager built on top of the amazing [restic](https://github.com/restic/restic) project.
 It provides an Ubuntu Yaru–themed GUI to manage your restic backups without needing to use the command line.
 
-Currently, simplerestic only works with Linux (tested with Ubuntu 24.04).
+Currently, simplerestic works with Linux (tested with Ubuntu 24.04) and Windows.
 
 > [!CAUTION]
 > This project is still in an early stage and may contain bugs. Use with caution for critical backups.
@@ -30,7 +30,6 @@ Currently, simplerestic only works with Linux (tested with Ubuntu 24.04).
 * [ ] Include/exclude files and add tags during snapshot creation
 * [ ] Download restic automatically instead of bundling the binary
 * [ ] Add statistics including `stats` command information
-* [ ] Add windows support
 
 ---
 
@@ -45,14 +44,22 @@ To build simplerestic yourself, you need to have [Flutter](https://docs.flutter.
 
 The command to build the application:
 ```bash
+# For Linux
 fvm flutter build linux
+# For Windows
+fvm flutter build windows
 ```
 (Without fvm):
 ```bash
+# For Linux
 flutter build linux
+# For Windows
+flutter build windows
 ```
 
-After running the build command you should find the executable under `build/linux/x64/release/bundle`.
+After running the build command you should find the executable under:
+  - Linux: `build/linux/x64/release/bundle`
+  - Windows: `build\windows\x64\runner\Release\`
 
 ---
 
