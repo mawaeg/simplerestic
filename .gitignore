@@ -37,6 +37,9 @@ pubspec.lock
 # Snap related
 *.snap
 
+# Windows
+**/windows/flutter/ephemeral/
+
 # Symbolication related
 app.*.symbols
 

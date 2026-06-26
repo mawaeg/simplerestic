@@ -25,7 +25,7 @@ def is_file_ignored(path):
 if __name__ == "__main__":
     cwd = os.path.abspath(os.getcwd())
     command = ["fvm", "flutter", "test"] + find_all_files('test/') + ["--coverage"]
-    subprocess.run(command, cwd=cwd)
+    subprocess.run(command, cwd=cwd, check=True)
 
     # Add uncovered files to report
     project_files = find_all_files("lib/")
@@ -39,4 +39,5 @@ if __name__ == "__main__":
                 file.write(f"SF:{uncovered_file}\nDA:1,0\nend_of_record\n")
 
     subprocess.run(["genhtml", "coverage/lcov.info", "-o", "coverage/html"], cwd=cwd)
-    subprocess.run(["open", "coverage/html/index.html"], cwd=cwd)
+    if not os.environ.get("CI"):
+        subprocess.run(["open", "coverage/html/index.html"], cwd=cwd)
