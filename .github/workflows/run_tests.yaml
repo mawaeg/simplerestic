@@ -25,6 +25,9 @@ jobs:
       - name: Install FVM CLI
         run: dart pub global activate fvm
 
+      - name: Grant Execute Permission to Restic
+        run: chmod +x assets/restic_0.18.1_linux_amd64
+
       - name: Run Python Coverage Script
         run: python run_tests_with_coverage.py
 
